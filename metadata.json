@@ -1,0 +1,8 @@
+{
+  "name": "RotateWise",
+  "description": "AI-powered crop rotation and climate intelligence platform for farm planning, environmental trend analysis, and rotation efficiency.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
