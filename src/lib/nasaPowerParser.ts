@@ -2,7 +2,7 @@ import type {
   NasaPowerClimateDataset,
   NasaPowerClimateSummary,
   NasaPowerDailyObservation,
-} from '../types/rotatewise';
+} from '../types/rotatewise.ts';
 
 export const NASA_POWER_PARAMETERS = [
   'T2M',

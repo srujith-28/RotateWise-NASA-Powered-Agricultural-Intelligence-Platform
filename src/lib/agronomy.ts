@@ -8,7 +8,7 @@ import type {
   RotationStep,
   SimulationParams,
   SimulationResult,
-} from '../types/rotatewise';
+} from '../types/rotatewise.ts';
 
 export interface RotationEvaluation {
   efficiencyScore: number;

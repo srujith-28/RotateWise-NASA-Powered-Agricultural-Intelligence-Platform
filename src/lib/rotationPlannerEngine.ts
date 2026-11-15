@@ -1,5 +1,5 @@
-import { CROP_KNOWLEDGE_DATABASE } from '../data/cropKnowledgeDb';
-import { DEMO_CROPS } from '../data/demoData';
+import { CROP_KNOWLEDGE_DATABASE } from '../data/cropKnowledgeDb.ts';
+import { DEMO_CROPS } from '../data/demoData.ts';
 import type {
   ConfidenceLevel,
   CropKnowledgeEntry,
@@ -22,12 +22,12 @@ import type {
   RotationStepEvaluation,
   SavedRotationPlan,
   SoilType,
-} from '../types/rotatewise';
+} from '../types/rotatewise.ts';
 import {
   evaluateCropSuitability,
   normalizeCropReferenceId,
   resolveCropFamily,
-} from './cropSuitabilityEngine';
+} from './cropSuitabilityEngine.ts';
 
 export const MAX_COMPARISON_PLANS = 3;
 

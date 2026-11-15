@@ -1,4 +1,4 @@
-import type { CropKnowledgeEntry } from '../types/rotatewise';
+import type { CropKnowledgeEntry } from '../types/rotatewise.ts';
 
 /**
  * Credible agronomic crop knowledge database covering 10 primary rotation crops.

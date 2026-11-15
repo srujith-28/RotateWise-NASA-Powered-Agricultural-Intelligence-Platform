@@ -14,12 +14,12 @@ import type {
   SavedClimateScenario,
   ScenarioRiskLevel,
   ScenarioSimulationResult,
-} from '../types/rotatewise';
+} from '../types/rotatewise.ts';
 import {
   createBaselineConfigForFarm,
   MAX_COMPARISON_SCENARIOS,
   simulateClimateScenario,
-} from './scenarioSimulationEngine';
+} from './scenarioSimulationEngine.ts';
 
 export const DEFAULT_DECISION_WEIGHTS: DecisionWeights = {
   climate: 30,

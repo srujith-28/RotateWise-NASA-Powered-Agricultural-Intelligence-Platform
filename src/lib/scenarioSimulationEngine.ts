@@ -1,4 +1,4 @@
-import { CROP_KNOWLEDGE_DATABASE } from '../data/cropKnowledgeDb';
+import { CROP_KNOWLEDGE_DATABASE } from '../data/cropKnowledgeDb.ts';
 import type {
   ClimateScenarioConfig,
   CropKnowledgeEntry,
@@ -16,15 +16,15 @@ import type {
   ScenarioRiskItem,
   ScenarioRiskLevel,
   ScenarioSimulationResult,
-} from '../types/rotatewise';
+} from '../types/rotatewise.ts';
 import {
   evaluateCropSuitability,
   normalizeCropReferenceId,
-} from './cropSuitabilityEngine';
+} from './cropSuitabilityEngine.ts';
 import {
   evaluateRotationPlan,
   resolveRotationCropMeta,
-} from './rotationPlannerEngine';
+} from './rotationPlannerEngine.ts';
 
 export const MAX_COMPARISON_SCENARIOS = 3;
 

@@ -5,7 +5,7 @@ import type {
   FarmClimateProfile,
   NotificationItem,
   ReportRecord,
-} from '../types/rotatewise';
+} from '../types/rotatewise.ts';
 
 export const DEMO_CROPS: CropProfile[] = [
   {

@@ -1,4 +1,4 @@
-import { CROP_KNOWLEDGE_DATABASE } from '../data/cropKnowledgeDb';
+import { CROP_KNOWLEDGE_DATABASE } from '../data/cropKnowledgeDb.ts';
 import type {
   ConfidenceLevel,
   CropKnowledgeEntry,
@@ -10,7 +10,7 @@ import type {
   NasaPowerClimateDataset,
   SuitabilityCategoryLabel,
   SuitabilityCategoryScore,
-} from '../types/rotatewise';
+} from '../types/rotatewise.ts';
 
 export const MAX_COMPARISON_CROPS = 4;
 
