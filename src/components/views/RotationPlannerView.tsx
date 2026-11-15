@@ -35,6 +35,7 @@ import { EmptyState } from '../common/StateFeedback';
 import { RotationPlanComparisonPanel } from '../planner/RotationPlanComparisonPanel';
 import { RotationScorePanel } from '../planner/RotationScorePanel';
 import { RotationTimeline } from '../planner/RotationTimeline';
+import { Button } from '../ui/Button';
 import { ConfirmDialog } from '../ui/ConfirmDialog';
 import { PageHeader } from '../ui/PageHeader';
 
@@ -80,7 +81,6 @@ export function RotationPlannerView({
     farmPlans.slice(0, MAX_COMPARISON_PLANS).map((p) => p.id)
   );
 
-  // Create plan form state
   const [createOpen, setCreateOpen] = useState(false);
   const [newPlanName, setNewPlanName] = useState('');
   const [periodMode, setPeriodMode] = useState<RotationPeriodMode>('6-season');
@@ -93,13 +93,11 @@ export function RotationPlannerView({
     'optimized'
   );
 
-  // Inline rename & delete confirm state
   const [renamingId, setRenamingId] = useState<string | null>(null);
   const [renameDraft, setRenameDraft] = useState('');
   const [pendingDeletePlan, setPendingDeletePlan] =
     useState<SavedRotationPlan | null>(null);
 
-  // Reset active selected & compared plans when active farm changes
   useEffect(() => {
     if (!farm) {
       setSelectedPlanId('');
@@ -117,7 +115,6 @@ export function RotationPlannerView({
     setCreateOpen(false);
   }, [farm?.id]);
 
-  // Keep selectedPlanId valid if plans list changes
   useEffect(() => {
     if (farmPlans.length === 0) return;
     if (!farmPlans.some((p) => p.id === selectedPlanId)) {
@@ -150,7 +147,6 @@ export function RotationPlannerView({
     [currentSteps, farm, nasaClimate.data]
   );
 
-  // Ensure farm's default synthesized plan is persisted before mutating
   const ensureFarmPlansSeeded = (prev: SavedRotationPlan[]): SavedRotationPlan[] => {
     const hasForFarm = prev.some((p) => p.farmId === farm.id);
     if (hasForFarm) return prev;
@@ -365,7 +361,7 @@ export function RotationPlannerView({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <PageHeader
         breadcrumb="Rotation Planner"
         title="Crop Rotation Planner"
@@ -374,33 +370,25 @@ export function RotationPlannerView({
         metadata={
           <>
             <span>{farm.soilType}</span>
-            <span aria-hidden="true">·</span>
+            <span className="text-[#C5CEC7]" aria-hidden="true">·</span>
             <span className="font-mono tabular-nums">
               pH {farm.health.phLevel.toFixed(1)}
             </span>
-            <span aria-hidden="true">·</span>
+            <span className="text-[#C5CEC7]" aria-hidden="true">·</span>
             <span>{farm.irrigation}</span>
           </>
         }
         actions={
           <>
-            <button
-              type="button"
-              onClick={() => setCreateOpen((v) => !v)}
-              className="inline-flex h-10 items-center gap-2 rounded-lg border border-[#174C3C] bg-white px-3.5 text-sm font-semibold text-[#174C3C] hover:bg-[#EAF2EC] whitespace-nowrap"
-            >
-              <FolderPlus className="h-4 w-4" aria-hidden="true" />
+            <Button variant="outline" onClick={() => setCreateOpen((v) => !v)}>
+              <FolderPlus className="h-4 w-4 text-[#174C3C]" aria-hidden="true" />
               <span>New Plan</span>
-            </button>
+            </Button>
 
-            <button
-              type="button"
-              onClick={handleSuggestOptimizedSequence}
-              className="inline-flex h-10 items-center gap-2 rounded-lg bg-[#174C3C] px-4 text-sm font-medium text-white hover:bg-[#113A2E] whitespace-nowrap"
-            >
+            <Button variant="primary" onClick={handleSuggestOptimizedSequence}>
               <Sparkles className="h-4 w-4" aria-hidden="true" />
               <span>Suggest Agronomic Sequence</span>
-            </button>
+            </Button>
           </>
         }
       />
@@ -409,16 +397,16 @@ export function RotationPlannerView({
       {createOpen && (
         <section
           aria-label="Create new crop rotation plan"
-          className="rounded-xl border border-[#C6DCD0] bg-[#F7FBF8] p-5"
+          className="rounded-2xl border border-[#C6DCD0] bg-[#EAF2EC]/45 p-5 sm:p-6"
         >
-          <div className="flex items-center justify-between border-b border-[#DCEAE1] pb-3">
-            <h2 className="font-display text-base font-bold text-[#14221A]">
+          <div className="flex items-center justify-between border-b border-[#D4E3D9] pb-3.5">
+            <h2 className="font-display text-base font-semibold text-[#18231E]">
               Create Multi-Season Rotation Plan
             </h2>
             <button
               type="button"
               onClick={() => setCreateOpen(false)}
-              className="rounded-md p-1 text-[#5F6E65] hover:bg-white hover:text-[#14221A]"
+              className="rounded-xl p-1.5 text-[#737D76] transition-colors hover:bg-white hover:text-[#18231E]"
               aria-label="Close new plan form"
             >
               <X className="h-4 w-4" aria-hidden="true" />
@@ -427,7 +415,7 @@ export function RotationPlannerView({
 
           <form onSubmit={handleCreatePlan} className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-6">
             <div className="lg:col-span-2">
-              <label htmlFor="new-plan-name" className="block text-xs font-medium text-[#14221A]">
+              <label htmlFor="new-plan-name" className="block text-xs font-medium text-[#18231E]">
                 Plan Name
               </label>
               <input
@@ -436,19 +424,19 @@ export function RotationPlannerView({
                 value={newPlanName}
                 onChange={(e) => setNewPlanName(e.target.value)}
                 placeholder="e.g. 3-Year Legume & Brassica Break"
-                className="mt-1.5 h-10 w-full rounded-lg border border-[#D8D5CB] bg-white px-3 text-sm text-[#14221A] focus:border-[#154734] focus:outline-none"
+                className="mt-1.5 h-10 w-full rounded-xl border border-[#E7EBE7] bg-white px-3 text-sm text-[#18231E] focus:border-[#174C3C] focus:outline-none"
               />
             </div>
 
             <div>
-              <label htmlFor="new-plan-horizon" className="block text-xs font-medium text-[#14221A]">
+              <label htmlFor="new-plan-horizon" className="block text-xs font-medium text-[#18231E]">
                 Planning Horizon
               </label>
               <select
                 id="new-plan-horizon"
                 value={periodMode}
                 onChange={(e) => setPeriodMode(e.target.value as RotationPeriodMode)}
-                className="mt-1.5 h-10 w-full rounded-lg border border-[#D8D5CB] bg-white px-2.5 text-sm text-[#14221A]"
+                className="mt-1.5 h-10 w-full rounded-xl border border-[#E7EBE7] bg-white px-2.5 text-sm text-[#18231E]"
               >
                 <option value="3-season">3-Season Plan</option>
                 <option value="6-season">6-Season (Multi-Year)</option>
@@ -458,7 +446,7 @@ export function RotationPlannerView({
 
             {periodMode === 'custom' && (
               <div>
-                <label htmlFor="new-plan-custom-count" className="block text-xs font-medium text-[#14221A]">
+                <label htmlFor="new-plan-custom-count" className="block text-xs font-medium text-[#18231E]">
                   Number of Seasons (1–12)
                 </label>
                 <input
@@ -468,20 +456,20 @@ export function RotationPlannerView({
                   max={12}
                   value={customStages}
                   onChange={(e) => setCustomStages(Number(e.target.value) || 4)}
-                  className="mt-1.5 h-10 w-full rounded-lg border border-[#D8D5CB] bg-white px-3 font-mono text-sm text-[#14221A]"
+                  className="mt-1.5 h-10 w-full rounded-xl border border-[#E7EBE7] bg-white px-3 font-mono text-sm text-[#18231E]"
                 />
               </div>
             )}
 
             <div>
-              <label htmlFor="new-plan-calendar" className="block text-xs font-medium text-[#14221A]">
+              <label htmlFor="new-plan-calendar" className="block text-xs font-medium text-[#18231E]">
                 Season Calendar
               </label>
               <select
                 id="new-plan-calendar"
                 value={seasonSystem}
                 onChange={(e) => setSeasonSystem(e.target.value as RotationSeasonSystem)}
-                className="mt-1.5 h-10 w-full rounded-lg border border-[#D8D5CB] bg-white px-2.5 text-sm text-[#14221A]"
+                className="mt-1.5 h-10 w-full rounded-xl border border-[#E7EBE7] bg-white px-2.5 text-sm text-[#18231E]"
               >
                 <option value="temperate-2">Spring / Autumn (2/yr)</option>
                 <option value="monsoon-3">Kharif / Rabi / Zaid (3/yr)</option>
@@ -489,7 +477,7 @@ export function RotationPlannerView({
             </div>
 
             <div>
-              <label htmlFor="new-plan-year" className="block text-xs font-medium text-[#14221A]">
+              <label htmlFor="new-plan-year" className="block text-xs font-medium text-[#18231E]">
                 Start Year
               </label>
               <input
@@ -499,12 +487,12 @@ export function RotationPlannerView({
                 max={2035}
                 value={startYear}
                 onChange={(e) => setStartYear(Number(e.target.value) || 2026)}
-                className="mt-1.5 h-10 w-full rounded-lg border border-[#D8D5CB] bg-white px-3 font-mono text-sm text-[#14221A]"
+                className="mt-1.5 h-10 w-full rounded-xl border border-[#E7EBE7] bg-white px-3 font-mono text-sm text-[#18231E]"
               />
             </div>
 
             <div>
-              <label htmlFor="new-plan-seed" className="block text-xs font-medium text-[#14221A]">
+              <label htmlFor="new-plan-seed" className="block text-xs font-medium text-[#18231E]">
                 Initial Crop Draft
               </label>
               <select
@@ -513,7 +501,7 @@ export function RotationPlannerView({
                 onChange={(e) =>
                   setSeedStrategy(e.target.value as 'optimized' | 'starter')
                 }
-                className="mt-1.5 h-10 w-full rounded-lg border border-[#D8D5CB] bg-white px-2.5 text-sm text-[#14221A]"
+                className="mt-1.5 h-10 w-full rounded-xl border border-[#E7EBE7] bg-white px-2.5 text-sm text-[#18231E]"
               >
                 <option value="optimized">Agronomy-Balanced Draft</option>
                 <option value="starter">Basic 2-Crop Alternation</option>
@@ -521,27 +509,24 @@ export function RotationPlannerView({
             </div>
 
             <div className="flex items-end sm:col-span-2 lg:col-span-6">
-              <button
-                type="submit"
-                className="inline-flex h-10 items-center gap-2 rounded-lg bg-[#154734] px-5 text-sm font-semibold text-white hover:bg-[#0F3527]"
-              >
+              <Button type="submit" variant="primary">
                 <Check className="h-4 w-4" aria-hidden="true" />
                 <span>Create &amp; Open Plan</span>
-              </button>
+              </Button>
             </div>
           </form>
         </section>
       )}
 
-      {/* Saved Plans Bar (Select, Rename, Duplicate, Delete, Set Primary) */}
+      {/* Saved Plans Bar */}
       <section
         aria-label="Saved rotation plans for active farm"
-        className="rounded-xl border border-[#E4E2DA] bg-white p-4 shadow-[0_1px_2px_rgba(18,43,29,0.03)]"
+        className="rounded-2xl border border-[#E7EBE7] bg-white p-4 sm:px-5 sm:py-4"
       >
         <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#5F6E65]">
-              <Layers className="h-3.5 w-3.5 text-[#154734]" aria-hidden="true" />
+            <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#737D76]">
+              <Layers className="h-3.5 w-3.5 text-[#174C3C]" aria-hidden="true" />
               <span>Saved Plans ({farmPlans.length}):</span>
             </span>
 
@@ -555,24 +540,24 @@ export function RotationPlannerView({
                     setSelectedPlanId(plan.id);
                     setRenamingId(null);
                   }}
-                  className={`inline-flex h-8 items-center gap-1.5 rounded-md border px-3 text-xs font-medium transition-colors ${
+                  className={`inline-flex h-8 items-center gap-1.5 rounded-xl border px-3 text-xs font-medium transition-colors ${
                     isSelected
-                      ? 'border-[#154734] bg-[#154734] text-white'
-                      : 'border-[#D8D5CB] bg-[#FAFAF7] text-[#14221A] hover:bg-white'
+                      ? 'border-[#174C3C] bg-[#174C3C] text-white'
+                      : 'border-[#E7EBE7] bg-[#F7F8F6] text-[#18231E] hover:bg-white'
                   }`}
                 >
                   <span>{plan.name}</span>
                   <span
                     className={`font-mono text-[11px] ${
-                      isSelected ? 'text-[#CBE6D6]' : 'text-[#6B7970]'
+                      isSelected ? 'text-[#CBE6D6]' : 'text-[#737D76]'
                     }`}
                   >
                     ({plan.steps.length})
                   </span>
                   {plan.isPrimary && (
                     <span
-                      className={`text-[10px] font-semibold uppercase tracking-wide ${
-                        isSelected ? 'text-[#CBE6D6]' : 'text-[#2E8B57]'
+                      className={`text-[10px] font-semibold ${
+                        isSelected ? 'text-[#CBE6D6]' : 'text-[#287A5A]'
                       }`}
                     >
                       · Active
@@ -595,18 +580,18 @@ export function RotationPlannerView({
                     type="text"
                     value={renameDraft}
                     onChange={(e) => setRenameDraft(e.target.value)}
-                    className="h-8 w-48 rounded-md border border-[#154734] bg-white px-2.5 text-xs text-[#14221A] focus:outline-none"
+                    className="h-8 w-48 rounded-xl border border-[#174C3C] bg-white px-2.5 text-xs text-[#18231E] focus:outline-none"
                   />
                   <button
                     type="submit"
-                    className="inline-flex h-8 items-center rounded-md bg-[#154734] px-2.5 text-xs font-semibold text-white hover:bg-[#0F3527]"
+                    className="inline-flex h-8 items-center rounded-xl bg-[#174C3C] px-3 text-xs font-semibold text-white hover:bg-[#133F32]"
                   >
                     Save
                   </button>
                   <button
                     type="button"
                     onClick={() => setRenamingId(null)}
-                    className="inline-flex h-8 items-center rounded-md border border-[#D8D5CB] px-2 text-xs text-[#4B5B51] hover:bg-[#F6F5F0]"
+                    className="inline-flex h-8 items-center rounded-xl border border-[#E7EBE7] px-2.5 text-xs text-[#737D76] hover:bg-[#F7F8F6]"
                   >
                     Cancel
                   </button>
@@ -617,7 +602,7 @@ export function RotationPlannerView({
                     <button
                       type="button"
                       onClick={() => handleSetPrimary(activePlan)}
-                      className="inline-flex h-8 items-center gap-1.5 rounded-md border border-[#154734] bg-[#F2F8F4] px-2.5 text-xs font-semibold text-[#154734] hover:bg-[#E3F1E8]"
+                      className="inline-flex h-8 items-center gap-1.5 rounded-xl bg-[#EAF2EC] px-3 text-xs font-semibold text-[#174C3C] hover:bg-[#DCEADF]"
                     >
                       <Check className="h-3.5 w-3.5" aria-hidden="true" />
                       <span>Set Active on Farm</span>
@@ -626,24 +611,24 @@ export function RotationPlannerView({
                   <button
                     type="button"
                     onClick={() => handleStartRename(activePlan)}
-                    className="inline-flex h-8 items-center gap-1.5 rounded-md border border-[#D8D5CB] bg-white px-2.5 text-xs font-medium text-[#14221A] hover:bg-[#F6F5F0]"
+                    className="inline-flex h-8 items-center gap-1.5 rounded-xl border border-[#E7EBE7] bg-white px-3 text-xs font-medium text-[#18231E] hover:bg-[#F7F8F6]"
                   >
-                    <Edit3 className="h-3.5 w-3.5 text-[#5F6E65]" aria-hidden="true" />
+                    <Edit3 className="h-3.5 w-3.5 text-[#737D76]" aria-hidden="true" />
                     <span>Rename</span>
                   </button>
                   <button
                     type="button"
                     onClick={() => handleDuplicatePlan(activePlan.id)}
-                    className="inline-flex h-8 items-center gap-1.5 rounded-md border border-[#D8D5CB] bg-white px-2.5 text-xs font-medium text-[#14221A] hover:bg-[#F6F5F0]"
+                    className="inline-flex h-8 items-center gap-1.5 rounded-xl border border-[#E7EBE7] bg-white px-3 text-xs font-medium text-[#18231E] hover:bg-[#F7F8F6]"
                   >
-                    <Copy className="h-3.5 w-3.5 text-[#5F6E65]" aria-hidden="true" />
+                    <Copy className="h-3.5 w-3.5 text-[#737D76]" aria-hidden="true" />
                     <span>Duplicate</span>
                   </button>
                   {farmPlans.length > 1 && (
                     <button
                       type="button"
                       onClick={() => setPendingDeletePlan(activePlan)}
-                      className="inline-flex h-8 items-center gap-1.5 rounded-md border border-[#E5C5C5] bg-white px-2.5 text-xs font-medium text-[#B91C1C] hover:bg-[#FEF2F2]"
+                      className="inline-flex h-8 items-center gap-1.5 rounded-xl border border-[#EBD2D2] bg-white px-3 text-xs font-medium text-[#B91C1C] hover:bg-[#FEF2F2]"
                     >
                       <Trash2 className="h-3.5 w-3.5" aria-hidden="true" />
                       <span>Delete</span>
@@ -656,7 +641,6 @@ export function RotationPlannerView({
         </div>
       </section>
 
-      {/* Deterministic 0–100 Rotation Score & 5 Categories */}
       <RotationScorePanel
         evaluation={evaluation}
         farm={farm}
@@ -667,7 +651,6 @@ export function RotationPlannerView({
         onEditFarm={() => onOpenEditFarm(farm)}
       />
 
-      {/* Interactive Visual Rotation Timeline + Inline Edits + Intelligent Alternatives */}
       <RotationTimeline
         steps={currentSteps}
         stepEvaluations={evaluation.stepEvaluations}
@@ -681,7 +664,6 @@ export function RotationPlannerView({
         onAddStep={handleAddStep}
       />
 
-      {/* Side-by-Side Comparison of Up to 3 Saved Plans */}
       <RotationPlanComparisonPanel
         plans={farmPlans}
         selectedPlanIds={comparedPlanIds}

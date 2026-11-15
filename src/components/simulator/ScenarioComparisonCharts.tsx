@@ -125,104 +125,104 @@ export function ScenarioComparisonCharts({
       className="grid grid-cols-1 gap-5 lg:grid-cols-2"
     >
       {/* 1. Rainfall Comparison Chart */}
-      <div className="rounded-xl border border-[#E4E2DA] bg-white p-5 shadow-[0_1px_2px_rgba(18,43,29,0.03)]">
-        <h3 className="font-display text-sm font-bold text-[#14221A]">
+      <div className="rounded-2xl border border-[#E7EBE7] bg-white p-5">
+        <h3 className="font-display text-sm font-semibold text-[#18231E]">
           Rainfall Comparison ({rainUnit})
         </h3>
-        <p className="mt-0.5 text-xs text-[#6B7970]">
+        <p className="mt-0.5 text-xs text-[#737D76]">
           Historical NASA POWER baseline vs. hypothetical {result.config.rainfallDeltaPct >= 0 ? `+${result.config.rainfallDeltaPct}` : result.config.rainfallDeltaPct}% scenario
         </p>
         <div className="mt-3 h-56 w-full">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={rainfallChartData} margin={{ top: 8, right: 12, left: -12, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#ECEAE3" vertical={false} />
-              <XAxis dataKey="label" tick={{ fontSize: 11, fill: '#5F6E65' }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fontSize: 11, fill: '#5F6E65' }} axisLine={false} tickLine={false} />
+              <CartesianGrid stroke="#EEF1EE" vertical={false} />
+              <XAxis dataKey="label" tick={{ fontSize: 11, fill: '#737D76' }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fontSize: 11, fill: '#737D76' }} axisLine={false} tickLine={false} />
               <Tooltip
                 formatter={(val) => [`${val ?? 0} ${rainUnit}`]}
-                contentStyle={{ borderRadius: '10px', border: '1px solid #E4E2DA', fontSize: '12px' }}
+                contentStyle={{ borderRadius: '12px', border: '1px solid #E7EBE7', fontSize: '12px' }}
               />
               <Legend wrapperStyle={{ fontSize: '12px' }} />
-              <Bar dataKey="Baseline" name="Historical Baseline" fill="#94A39A" radius={[4, 4, 0, 0]} isAnimationActive={false} />
-              <Bar dataKey="Simulated" name="Simulated Scenario" fill="#154734" radius={[4, 4, 0, 0]} isAnimationActive={false} />
+              <Bar dataKey="Baseline" name="Historical Baseline" fill="#B9CEC0" radius={[4, 4, 0, 0]} isAnimationActive={false} />
+              <Bar dataKey="Simulated" name="Simulated Scenario" fill="#174C3C" radius={[4, 4, 0, 0]} isAnimationActive={false} />
             </BarChart>
           </ResponsiveContainer>
         </div>
       </div>
 
       {/* 2. Temperature Comparison Chart */}
-      <div className="rounded-xl border border-[#E4E2DA] bg-white p-5 shadow-[0_1px_2px_rgba(18,43,29,0.03)]">
-        <h3 className="font-display text-sm font-bold text-[#14221A]">
+      <div className="rounded-2xl border border-[#E7EBE7] bg-white p-5">
+        <h3 className="font-display text-sm font-semibold text-[#18231E]">
           Temperature Comparison ({tempUnit})
         </h3>
-        <p className="mt-0.5 text-xs text-[#6B7970]">
+        <p className="mt-0.5 text-xs text-[#737D76]">
           Historical NASA POWER temperatures vs. hypothetical {result.config.temperatureShiftC >= 0 ? `+${result.config.temperatureShiftC}` : result.config.temperatureShiftC}°C shift
         </p>
         <div className="mt-3 h-56 w-full">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={tempChartData} margin={{ top: 8, right: 12, left: -12, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#ECEAE3" vertical={false} />
-              <XAxis dataKey="metric" tick={{ fontSize: 11, fill: '#5F6E65' }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fontSize: 11, fill: '#5F6E65' }} axisLine={false} tickLine={false} />
+              <CartesianGrid stroke="#EEF1EE" vertical={false} />
+              <XAxis dataKey="metric" tick={{ fontSize: 11, fill: '#737D76' }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fontSize: 11, fill: '#737D76' }} axisLine={false} tickLine={false} />
               <Tooltip
                 formatter={(val) => [`${val ?? 0} ${tempUnit}`]}
-                contentStyle={{ borderRadius: '10px', border: '1px solid #E4E2DA', fontSize: '12px' }}
+                contentStyle={{ borderRadius: '12px', border: '1px solid #E7EBE7', fontSize: '12px' }}
               />
               <Legend wrapperStyle={{ fontSize: '12px' }} />
-              <Bar dataKey="Baseline" name="Historical Baseline" fill="#94A39A" radius={[4, 4, 0, 0]} isAnimationActive={false} />
-              <Bar dataKey="Simulated" name="Simulated Scenario" fill="#C27803" radius={[4, 4, 0, 0]} isAnimationActive={false} />
+              <Bar dataKey="Baseline" name="Historical Baseline" fill="#B9CEC0" radius={[4, 4, 0, 0]} isAnimationActive={false} />
+              <Bar dataKey="Simulated" name="Simulated Scenario" fill="#B45309" radius={[4, 4, 0, 0]} isAnimationActive={false} />
             </BarChart>
           </ResponsiveContainer>
         </div>
       </div>
 
       {/* 3. Crop Suitability Comparison Chart */}
-      <div className="rounded-xl border border-[#E4E2DA] bg-white p-5 shadow-[0_1px_2px_rgba(18,43,29,0.03)]">
-        <h3 className="font-display text-sm font-bold text-[#14221A]">
+      <div className="rounded-2xl border border-[#E7EBE7] bg-white p-5">
+        <h3 className="font-display text-sm font-semibold text-[#18231E]">
           Crop Suitability Comparison (0–100)
         </h3>
-        <p className="mt-0.5 text-xs text-[#6B7970]">
+        <p className="mt-0.5 text-xs text-[#737D76]">
           Deterministic suitability score baseline vs. simulated conditions for primary &amp; alternative crops
         </p>
         <div className="mt-3 h-56 w-full">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={suitabilityChartData} margin={{ top: 8, right: 12, left: -12, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#ECEAE3" vertical={false} />
-              <XAxis dataKey="crop" tick={{ fontSize: 11, fill: '#5F6E65' }} axisLine={false} tickLine={false} />
-              <YAxis domain={[0, 100]} tick={{ fontSize: 11, fill: '#5F6E65' }} axisLine={false} tickLine={false} />
+              <CartesianGrid stroke="#EEF1EE" vertical={false} />
+              <XAxis dataKey="crop" tick={{ fontSize: 11, fill: '#737D76' }} axisLine={false} tickLine={false} />
+              <YAxis domain={[0, 100]} tick={{ fontSize: 11, fill: '#737D76' }} axisLine={false} tickLine={false} />
               <Tooltip
                 formatter={(val) => [`${val ?? 0}/100`]}
-                contentStyle={{ borderRadius: '10px', border: '1px solid #E4E2DA', fontSize: '12px' }}
+                contentStyle={{ borderRadius: '12px', border: '1px solid #E7EBE7', fontSize: '12px' }}
               />
               <Legend wrapperStyle={{ fontSize: '12px' }} />
-              <Bar dataKey="Baseline" name="Baseline Score" fill="#94A39A" radius={[4, 4, 0, 0]} isAnimationActive={false} />
-              <Bar dataKey="Simulated" name="Simulated Score" fill="#2E8B57" radius={[4, 4, 0, 0]} isAnimationActive={false} />
+              <Bar dataKey="Baseline" name="Baseline Score" fill="#B9CEC0" radius={[4, 4, 0, 0]} isAnimationActive={false} />
+              <Bar dataKey="Simulated" name="Simulated Score" fill="#287A5A" radius={[4, 4, 0, 0]} isAnimationActive={false} />
             </BarChart>
           </ResponsiveContainer>
         </div>
       </div>
 
       {/* 4. Water Availability Comparison Chart */}
-      <div className="rounded-xl border border-[#E4E2DA] bg-white p-5 shadow-[0_1px_2px_rgba(18,43,29,0.03)]">
-        <h3 className="font-display text-sm font-bold text-[#14221A]">
+      <div className="rounded-2xl border border-[#E7EBE7] bg-white p-5">
+        <h3 className="font-display text-sm font-semibold text-[#18231E]">
           Water Availability vs. Crop Requirement ({rainUnit})
         </h3>
-        <p className="mt-0.5 text-xs text-[#6B7970]">
+        <p className="mt-0.5 text-xs text-[#737D76]">
           Effective supply (rainfall + {sim.effectiveIrrigation}{sim.rainwaterHarvestingBonusMm > 0 ? ' + rainwater capture' : ''}) vs. {primaryCrop.name} seasonal demand
         </p>
         <div className="mt-3 h-56 w-full">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={waterChartData} margin={{ top: 8, right: 12, left: -12, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#ECEAE3" vertical={false} />
-              <XAxis dataKey="metric" interval={0} tick={{ fontSize: 11, fill: '#5F6E65' }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fontSize: 11, fill: '#5F6E65' }} axisLine={false} tickLine={false} />
+              <CartesianGrid stroke="#EEF1EE" vertical={false} />
+              <XAxis dataKey="metric" interval={0} tick={{ fontSize: 11, fill: '#737D76' }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fontSize: 11, fill: '#737D76' }} axisLine={false} tickLine={false} />
               <Tooltip
                 formatter={(val) => [`${val ?? 0} ${rainUnit}`]}
-                contentStyle={{ borderRadius: '10px', border: '1px solid #E4E2DA', fontSize: '12px' }}
+                contentStyle={{ borderRadius: '12px', border: '1px solid #E7EBE7', fontSize: '12px' }}
               />
               <Legend wrapperStyle={{ fontSize: '12px' }} />
-              <Bar dataKey="Baseline" name="Baseline Reference" fill="#94A39A" radius={[4, 4, 0, 0]} isAnimationActive={false} />
-              <Bar dataKey="Simulated" name="Simulated Scenario" fill="#154734" radius={[4, 4, 0, 0]} isAnimationActive={false} />
+              <Bar dataKey="Baseline" name="Baseline Reference" fill="#B9CEC0" radius={[4, 4, 0, 0]} isAnimationActive={false} />
+              <Bar dataKey="Simulated" name="Simulated Scenario" fill="#174C3C" radius={[4, 4, 0, 0]} isAnimationActive={false} />
             </BarChart>
           </ResponsiveContainer>
         </div>

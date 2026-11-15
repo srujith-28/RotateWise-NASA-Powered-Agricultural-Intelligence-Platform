@@ -57,7 +57,7 @@ interface CropComparisonPanelProps {
   onAddToRotation?: (crop: CropKnowledgeEntry) => void;
 }
 
-const COMPARE_COLORS = ['#154734', '#2E8B57', '#C27803', '#3B6E8C'];
+const COMPARE_COLORS = ['#174C3C', '#287A5A', '#B45309', '#3B6E8C'];
 
 const COMPARE_CATEGORIES: Array<'All' | KnowledgeCropCategory> = [
   'All',
@@ -124,7 +124,6 @@ export function CropComparisonPanel({
     });
   }, [evaluations, selectorSearch, selectorCategory]);
 
-  // Reuse rotationPlannerEngine to verify compatibility if each crop were scheduled next on the active farm
   const rotationPlanCompatibilityByCropId = useMemo(() => {
     const map = new Map<
       string,
@@ -178,18 +177,18 @@ export function CropComparisonPanel({
   return (
     <section
       aria-label="Interactive crop comparison"
-      className="rounded-xl border border-[#E4E2DA] bg-white p-5 shadow-[0_1px_2px_rgba(18,43,29,0.03)]"
+      className="rounded-2xl border border-[#E7EBE7] bg-white p-5 sm:p-6"
     >
       {/* Header + Selected Farm Context */}
-      <div className="flex flex-col gap-3 border-b border-[#ECEAE3] pb-4 lg:flex-row lg:items-start lg:justify-between">
+      <div className="flex flex-col gap-3 border-b border-[#E7EBE7] pb-4 lg:flex-row lg:items-start lg:justify-between">
         <div>
-          <h2 className="flex items-center gap-2 font-display text-lg font-bold text-[#14221A]">
-            <GitCompareArrows className="h-4 w-4 text-[#154734]" aria-hidden="true" />
+          <h2 className="flex items-center gap-2 font-display text-[17px] font-semibold tracking-[-0.015em] text-[#18231E]">
+            <GitCompareArrows className="h-4 w-4 text-[#174C3C]" aria-hidden="true" />
             <span>
-              Crop Comparison Module ({crops.length}/{MAX_COMPARISON_CROPS} Selected)
+              Crop Comparison Matrix ({crops.length}/{MAX_COMPARISON_CROPS} Selected)
             </span>
           </h2>
-          <p className="mt-0.5 text-xs text-[#6B7970]">
+          <p className="mt-1 text-xs text-[#737D76]">
             Compare up to {MAX_COMPARISON_CROPS} crops across climate, soil, cultivation, rotation, and deterministic suitability scores. Agronomic references only — no fabricated yield, price, or profit estimates.
           </p>
         </div>
@@ -198,16 +197,16 @@ export function CropComparisonPanel({
           <button
             type="button"
             onClick={onEditFarm}
-            className="inline-flex h-8 items-center gap-1.5 rounded-md border border-[#D8D5CB] bg-[#FAFAF7] px-2.5 text-xs font-medium text-[#14221A] hover:bg-[#F2F6F3]"
+            className="inline-flex h-8 items-center gap-1.5 rounded-xl border border-[#E7EBE7] bg-white px-3 text-xs font-medium text-[#18231E] transition-colors hover:bg-[#F7F8F6]"
           >
-            <Edit3 className="h-3.5 w-3.5 text-[#154734]" aria-hidden="true" />
+            <Edit3 className="h-3.5 w-3.5 text-[#174C3C]" aria-hidden="true" />
             <span>Update Farm Soil / Crop</span>
           </button>
           {crops.length > 0 && (
             <button
               type="button"
               onClick={onClearAll}
-              className="inline-flex h-8 items-center gap-1 rounded-md border border-[#E5C5C5] bg-white px-2.5 text-xs font-medium text-[#B91C1C] hover:bg-[#FEF2F2]"
+              className="inline-flex h-8 items-center gap-1 rounded-xl border border-[#EBD2D2] bg-white px-3 text-xs font-medium text-[#B91C1C] transition-colors hover:bg-[#FEF2F2]"
             >
               <X className="h-3.5 w-3.5" aria-hidden="true" />
               <span>Clear Comparison</span>
@@ -217,10 +216,10 @@ export function CropComparisonPanel({
       </div>
 
       {/* Farm & Climate Context Strip */}
-      <div className="mt-4 grid grid-cols-1 gap-2.5 rounded-lg border border-[#ECEAE3] bg-[#FAFAF7] p-3 text-xs lg:grid-cols-2">
-        <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[#4B5B51]">
-          <span className="font-semibold text-[#14221A]">Selected Farm:</span>
-          <span className="font-medium text-[#154734]">{farm.name}</span>
+      <div className="mt-4 grid grid-cols-1 gap-2.5 rounded-xl bg-[#F7F8F6] px-4 py-3 text-xs lg:grid-cols-2">
+        <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[#737D76]">
+          <span className="font-semibold text-[#18231E]">Selected Farm:</span>
+          <span className="font-medium text-[#174C3C]">{farm.name}</span>
           <span aria-hidden="true">·</span>
           <span>{farm.soilType}</span>
           <span aria-hidden="true">·</span>
@@ -232,14 +231,14 @@ export function CropComparisonPanel({
           <span aria-hidden="true">·</span>
           <span>
             Prior/Current:{' '}
-            <strong className="text-[#14221A]">
+            <strong className="text-[#18231E]">
               {farm.currentCropName || 'Not recorded'}
             </strong>
           </span>
         </div>
 
-        <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[#4B5B51] lg:justify-end">
-          <span className="font-semibold text-[#14221A]">Historical Climate:</span>
+        <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[#737D76] lg:justify-end">
+          <span className="font-semibold text-[#18231E]">Historical Climate:</span>
           {nasaData ? (
             <span className="font-mono text-[11px] tabular-nums">
               NASA POWER ({nasaData.classification}) {nasaData.startDate} to{' '}
@@ -251,7 +250,7 @@ export function CropComparisonPanel({
                 : 'Solar N/A'}
             </span>
           ) : (
-            <span className="font-medium text-[#92400E]">
+            <span className="font-medium text-[#9A5B00]">
               NASA POWER observations unavailable (missing climate &amp; rainfall metrics flagged)
             </span>
           )}
@@ -259,11 +258,11 @@ export function CropComparisonPanel({
       </div>
 
       {/* Searchable Crop Selector + Category Filters + Active Chips */}
-      <div className="mt-4 space-y-3 rounded-lg border border-[#ECEAE3] bg-[#FBFBF9] p-3.5">
+      <div className="mt-4 space-y-3 border-b border-[#E7EBE7] pb-5">
         <div className="flex flex-col gap-2.5 lg:flex-row lg:items-center lg:justify-between">
           <div className="relative w-full lg:w-72">
             <Search
-              className="pointer-events-none absolute top-1/2 left-3 h-3.5 w-3.5 -translate-y-1/2 text-[#6B7970]"
+              className="pointer-events-none absolute top-1/2 left-3 h-3.5 w-3.5 -translate-y-1/2 text-[#737D76]"
               aria-hidden="true"
             />
             <label htmlFor="compare-crop-search" className="sr-only">
@@ -275,24 +274,24 @@ export function CropComparisonPanel({
               value={selectorSearch}
               onChange={(e) => setSelectorSearch(e.target.value)}
               placeholder="Search crops to compare (name, family, N role)..."
-              className="h-9 w-full rounded-lg border border-[#D8D5CB] bg-white pr-3 pl-8 text-xs text-[#14221A] focus:border-[#154734] focus:outline-none"
+              className="h-9 w-full rounded-xl border border-[#E7EBE7] bg-[#F7F8F6] pr-3 pl-8 text-xs text-[#18231E] focus:border-[#174C3C] focus:bg-white focus:outline-none"
             />
           </div>
 
           <div
             role="group"
             aria-label="Filter comparison crops by category"
-            className="flex flex-wrap items-center gap-1 rounded-lg bg-[#EAE8E0] p-1"
+            className="flex flex-wrap items-center gap-1 rounded-xl bg-[#EEF1EE] p-1"
           >
             {COMPARE_CATEGORIES.map((cat) => (
               <button
                 key={cat}
                 type="button"
                 onClick={() => setSelectorCategory(cat)}
-                className={`rounded-md px-2.5 py-1 text-[11px] font-medium transition-colors whitespace-nowrap ${
+                className={`rounded-lg px-2.5 py-1 text-[11px] font-medium transition-all whitespace-nowrap ${
                   selectorCategory === cat
-                    ? 'bg-white text-[#14221A] shadow-sm'
-                    : 'text-[#4B5B51] hover:text-[#14221A]'
+                    ? 'bg-white text-[#18231E] shadow-[0_1px_2px_rgba(20,37,29,0.08)]'
+                    : 'text-[#737D76] hover:text-[#18231E]'
                 }`}
               >
                 {cat}
@@ -315,21 +314,21 @@ export function CropComparisonPanel({
                 disabled={disabled}
                 onClick={() => onToggleCrop(item.crop.id)}
                 aria-pressed={isSelected}
-                className={`inline-flex h-8 items-center gap-1.5 rounded-md border px-2.5 text-xs font-medium transition-colors ${
+                className={`inline-flex h-8 items-center gap-1.5 rounded-xl border px-3 text-xs font-medium transition-colors ${
                   isSelected
-                    ? 'border-[#154734] bg-[#154734] text-white'
-                    : 'border-[#D8D5CB] bg-white text-[#14221A] hover:bg-[#F2F6F3] disabled:cursor-not-allowed disabled:opacity-45'
+                    ? 'border-[#174C3C] bg-[#174C3C] text-white'
+                    : 'border-[#E7EBE7] bg-white text-[#18231E] hover:bg-[#F7F8F6] disabled:cursor-not-allowed disabled:opacity-45'
                 }`}
               >
                 {isSelected ? (
                   <Check className="h-3 w-3 shrink-0" aria-hidden="true" />
                 ) : (
-                  <Plus className="h-3 w-3 shrink-0 text-[#154734]" aria-hidden="true" />
+                  <Plus className="h-3 w-3 shrink-0 text-[#174C3C]" aria-hidden="true" />
                 )}
                 <span>{item.crop.name}</span>
                 <span
                   className={`font-mono text-[11px] tabular-nums ${
-                    isSelected ? 'text-[#CBE6D6]' : 'text-[#6B7970]'
+                    isSelected ? 'text-[#CBE6D6]' : 'text-[#737D76]'
                   }`}
                 >
                   {item.overallScore}
@@ -338,7 +337,7 @@ export function CropComparisonPanel({
             );
           })}
           {filteredOptions.length === 0 && (
-            <span className="text-xs text-[#6B7970]">
+            <span className="text-xs text-[#737D76]">
               No crops match &ldquo;{selectorSearch}&rdquo; in {selectorCategory}.
             </span>
           )}
@@ -346,8 +345,8 @@ export function CropComparisonPanel({
 
         {/* Selected Chips Strip */}
         {crops.length > 0 && (
-          <div className="flex flex-wrap items-center gap-2 border-t border-[#ECEAE3] pt-2.5">
-            <span className="text-[11px] font-semibold text-[#5F6E65]">
+          <div className="flex flex-wrap items-center gap-2 pt-1">
+            <span className="text-[11px] font-medium text-[#737D76]">
               Active Comparison:
             </span>
             {crops.map((item, idx) => (
@@ -355,7 +354,7 @@ export function CropComparisonPanel({
                 key={item.crop.id}
                 type="button"
                 onClick={() => onRemoveCrop(item.crop.id)}
-                className="inline-flex h-7 items-center gap-1.5 rounded-md border border-[#D8D5CB] bg-white px-2 text-xs font-medium text-[#14221A] hover:border-[#F2C6C6] hover:bg-[#FEE2E2]"
+                className="inline-flex h-7 items-center gap-1.5 rounded-lg border border-[#E7EBE7] bg-[#F7F8F6] px-2.5 text-xs font-medium text-[#18231E] transition-colors hover:border-[#EBD2D2] hover:bg-[#FEE2E2]"
                 title={`Remove ${item.crop.name} from comparison`}
               >
                 <span
@@ -366,11 +365,11 @@ export function CropComparisonPanel({
                   aria-hidden="true"
                 />
                 <span>{item.crop.name}</span>
-                <X className="h-3 w-3 text-[#6B7970]" aria-hidden="true" />
+                <X className="h-3 w-3 text-[#737D76]" aria-hidden="true" />
               </button>
             ))}
             {compareLimitReached && (
-              <span className="text-[11px] text-[#6B7970]">
+              <span className="text-[11px] text-[#737D76]">
                 Max 4 crops reached — remove one to swap in another.
               </span>
             )}
@@ -379,18 +378,18 @@ export function CropComparisonPanel({
       </div>
 
       {crops.length === 0 ? (
-        <div className="py-12 text-center text-xs text-[#6B7970]">
+        <div className="py-12 text-center text-xs text-[#737D76]">
           Select up to {MAX_COMPARISON_CROPS} crops above (or click <strong>Compare</strong> on any recommendation card) to launch side-by-side comparison.
         </div>
       ) : (
-        <div className="mt-6 space-y-6">
-          {/* 4 Deterministic Recommendation Explanations */}
+        <div className="mt-6 space-y-8">
+          {/* 4 Deterministic Recommendation Explanations (Hairline Strip instead of Nested Boxes) */}
           <div>
-            <h3 className="flex items-center gap-1.5 font-display text-sm font-bold text-[#14221A]">
-              <Award className="h-4 w-4 text-[#154734]" aria-hidden="true" />
+            <h3 className="flex items-center gap-1.5 font-display text-sm font-semibold text-[#18231E]">
+              <Award className="h-4 w-4 text-[#174C3C]" aria-hidden="true" />
               <span>Recommendation Summary (Deterministic Suitability Engine)</span>
             </h3>
-            <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            <div className="mt-3 grid grid-cols-1 divide-y divide-[#E7EBE7] rounded-2xl border border-[#E7EBE7] bg-[#F7F8F6]/60 sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-4 lg:divide-x">
               {(
                 [
                   {
@@ -421,29 +420,22 @@ export function CropComparisonPanel({
               ).map(({ key, title, icon: Icon, insight }) => {
                 const isDetermined = insight.status === 'determined';
                 return (
-                  <div
-                    key={key}
-                    className={`flex flex-col justify-between rounded-lg border p-3.5 ${
-                      isDetermined
-                        ? 'border-[#CFE4D6] bg-[#F5FAF7]'
-                        : 'border-[#F3D8A8] bg-[#FFFBEB]'
-                    }`}
-                  >
+                  <div key={key} className="flex flex-col justify-between p-4">
                     <div>
                       <div className="flex items-center justify-between gap-2">
-                        <span className="text-[11px] font-semibold uppercase tracking-wide text-[#5F6E65]">
+                        <span className="text-[11px] font-medium text-[#737D76]">
                           {title}
                         </span>
                         <Icon
                           className={`h-3.5 w-3.5 shrink-0 ${
-                            isDetermined ? 'text-[#154734]' : 'text-[#B45309]'
+                            isDetermined ? 'text-[#174C3C]' : 'text-[#B45309]'
                           }`}
                           aria-hidden="true"
                         />
                       </div>
                       <p
-                        className={`mt-1.5 text-sm font-bold ${
-                          isDetermined ? 'text-[#154734]' : 'text-[#92400E]'
+                        className={`mt-1.5 text-sm font-semibold ${
+                          isDetermined ? 'text-[#174C3C]' : 'text-[#9A5B00]'
                         }`}
                       >
                         {isDetermined
@@ -453,12 +445,12 @@ export function CropComparisonPanel({
                           : 'Insufficient Data'}
                       </p>
                       {insight.scoreLabel && (
-                        <p className="font-mono text-[11px] font-semibold tabular-nums text-[#2E8B57]">
+                        <p className="font-mono text-[11px] font-semibold tabular-nums text-[#287A5A]">
                           {insight.scoreLabel}
                         </p>
                       )}
                     </div>
-                    <p className="mt-2 text-[11px] leading-relaxed text-[#4B5B51]">
+                    <p className="mt-2 text-[11px] leading-relaxed text-[#737D76]">
                       {insight.explanation}
                     </p>
                   </div>
@@ -468,46 +460,48 @@ export function CropComparisonPanel({
           </div>
 
           {/* Grouped Bar Chart Comparing Overall + 5 Scoring Categories */}
-          <div className="rounded-xl border border-[#ECEAE3] bg-[#FAFAF7] p-4">
+          <div className="border-t border-[#E7EBE7] pt-6">
             <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-xs font-semibold text-[#14221A]">
+              <p className="text-sm font-semibold text-[#18231E]">
                 Suitability Score &amp; Category Comparison (0–100%)
               </p>
-              <span className="text-[11px] text-[#6B7970]">
+              <span className="text-[11px] text-[#737D76]">
                 Missing inputs award 0 pts rather than full marks
               </span>
             </div>
-            <div className="mt-3 h-72 w-full">
+            <div className="mt-4 h-72 w-full">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={chartData} margin={{ top: 10, right: 12, left: -12, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#E4E2DA" vertical={false} />
+                <BarChart data={chartData} margin={{ top: 10, right: 12, left: -14, bottom: 0 }}>
+                  <CartesianGrid stroke="#EEF1EE" vertical={false} />
                   <XAxis
                     dataKey="metric"
-                    tick={{ fontSize: 11, fill: '#5F6E65' }}
+                    tick={{ fontSize: 11, fill: '#737D76' }}
                     axisLine={false}
                     tickLine={false}
+                    dy={6}
                   />
                   <YAxis
                     domain={[0, 100]}
-                    tick={{ fontSize: 11, fill: '#5F6E65' }}
+                    tick={{ fontSize: 11, fill: '#737D76' }}
                     axisLine={false}
                     tickLine={false}
                   />
                   <Tooltip
                     formatter={(value) => [`${value ?? 0}/100`]}
                     contentStyle={{
-                      borderRadius: '10px',
-                      border: '1px solid #E4E2DA',
+                      borderRadius: '12px',
+                      border: '1px solid #E7EBE7',
+                      boxShadow: '0 10px 26px rgba(20, 37, 29, 0.10)',
                       fontSize: '12px',
                     }}
                   />
-                  <Legend wrapperStyle={{ fontSize: '12px' }} />
+                  <Legend wrapperStyle={{ fontSize: '12px', paddingTop: '8px' }} />
                   {crops.map((item, idx) => (
                     <Bar
                       key={item.crop.id}
                       dataKey={item.crop.name}
                       fill={COMPARE_COLORS[idx % COMPARE_COLORS.length]}
-                      radius={[4, 4, 0, 0]}
+                      radius={[5, 5, 0, 0]}
                       isAnimationActive={false}
                     />
                   ))}
@@ -516,13 +510,13 @@ export function CropComparisonPanel({
             </div>
           </div>
 
-          {/* Highlighted Strengths, Limitations & Missing Information per Crop (Responsive Cards) */}
-          <div>
-            <h3 className="font-display text-sm font-bold text-[#14221A]">
+          {/* Highlighted Strengths, Limitations & Missing Information per Crop */}
+          <div className="border-t border-[#E7EBE7] pt-6">
+            <h3 className="font-display text-sm font-semibold text-[#18231E]">
               Strengths, Limitations &amp; Missing Data per Crop
             </h3>
             <div
-              className={`mt-3 grid grid-cols-1 gap-3 ${
+              className={`mt-3 grid grid-cols-1 gap-4 ${
                 crops.length === 1
                   ? 'md:grid-cols-1'
                   : crops.length === 2
@@ -535,10 +529,10 @@ export function CropComparisonPanel({
                 return (
                   <div
                     key={item.crop.id}
-                    className="flex flex-col justify-between rounded-xl border border-[#E4E2DA] bg-[#FAFAF7] p-4"
+                    className="flex flex-col justify-between rounded-2xl bg-[#F7F8F6] p-4"
                   >
                     <div className="space-y-3">
-                      <div className="flex items-start justify-between gap-2 border-b border-[#ECEAE3] pb-2.5">
+                      <div className="flex items-start justify-between gap-2 border-b border-[#E7EBE7] pb-2.5">
                         <div>
                           <div className="flex items-center gap-1.5">
                             <span
@@ -549,55 +543,52 @@ export function CropComparisonPanel({
                               }}
                               aria-hidden="true"
                             />
-                            <h4 className="text-sm font-bold text-[#14221A]">
+                            <h4 className="text-sm font-semibold text-[#18231E]">
                               {item.crop.name}
                             </h4>
                           </div>
-                          <p className="text-[11px] text-[#6B7970]">
+                          <p className="text-[11px] text-[#737D76]">
                             {item.crop.family} · {item.crop.category}
                           </p>
                         </div>
                         <div className="text-right">
-                          <span className="font-mono text-base font-bold tabular-nums text-[#154734]">
+                          <span className="font-mono text-base font-semibold tabular-nums text-[#174C3C]">
                             {item.overallScore}/100
                           </span>
-                          <span className="block text-[11px] text-[#5F6E65]">
+                          <span className="block text-[11px] text-[#737D76]">
                             {item.suitabilityCategory} · {item.confidenceLevel}
                           </span>
                         </div>
                       </div>
 
-                      {/* Strengths */}
                       <div>
-                        <p className="flex items-center gap-1 text-[11px] font-semibold text-[#154734]">
+                        <p className="flex items-center gap-1 text-[11px] font-semibold text-[#174C3C]">
                           <CheckCircle2 className="h-3 w-3" aria-hidden="true" />
                           <span>Strengths</span>
                         </p>
-                        <ul className="mt-1 list-disc space-y-0.5 pl-4 text-[11px] text-[#4B5B51]">
+                        <ul className="mt-1 list-disc space-y-0.5 pl-4 text-[11px] text-[#445149]">
                           {item.supportingReasons.slice(0, 3).map((r) => (
                             <li key={r}>{r}</li>
                           ))}
                         </ul>
                       </div>
 
-                      {/* Limitations & Challenges */}
                       <div>
-                        <p className="flex items-center gap-1 text-[11px] font-semibold text-[#92400E]">
+                        <p className="flex items-center gap-1 text-[11px] font-semibold text-[#9A5B00]">
                           <AlertTriangle className="h-3 w-3" aria-hidden="true" />
                           <span>Limitations &amp; Risks</span>
                         </p>
-                        <ul className="mt-1 list-disc space-y-0.5 pl-4 text-[11px] text-[#4B5B51]">
+                        <ul className="mt-1 list-disc space-y-0.5 pl-4 text-[11px] text-[#445149]">
                           {item.cultivationChallenges.slice(0, 3).map((c) => (
                             <li key={c}>{c}</li>
                           ))}
                         </ul>
                       </div>
 
-                      {/* Missing Information */}
                       {item.dataLimitations.length > 0 && (
-                        <div className="rounded-md border border-[#E4E2DA] bg-white p-2 text-[11px] text-[#5F6E65]">
-                          <p className="flex items-center gap-1 font-semibold text-[#14221A]">
-                            <Info className="h-3 w-3 text-[#92400E]" aria-hidden="true" />
+                        <div className="rounded-xl bg-white p-2.5 text-[11px] text-[#737D76]">
+                          <p className="flex items-center gap-1 font-semibold text-[#18231E]">
+                            <Info className="h-3 w-3 text-[#9A5B00]" aria-hidden="true" />
                             <span>Missing / Unknown Inputs ({item.dataCompletenessPct}% verified)</span>
                           </p>
                           <ul className="mt-0.5 list-disc pl-4">
@@ -608,11 +599,10 @@ export function CropComparisonPanel({
                         </div>
                       )}
 
-                      {/* Rotation Planner Continuity Note */}
                       {rotCheck && (
                         <p
                           className={`text-[11px] ${
-                            rotCheck.hasConflict ? 'text-[#991B1B]' : 'text-[#154734]'
+                            rotCheck.hasConflict ? 'text-[#991B1B]' : 'text-[#174C3C]'
                           }`}
                         >
                           {rotCheck.hasConflict
@@ -626,7 +616,7 @@ export function CropComparisonPanel({
                       <button
                         type="button"
                         onClick={() => onAddToRotation(item.crop)}
-                        className="mt-3 inline-flex h-8 w-full items-center justify-center rounded-md border border-[#154734] bg-white px-2.5 text-xs font-semibold text-[#154734] hover:bg-[#F2F8F4]"
+                        className="mt-3.5 inline-flex h-8 w-full items-center justify-center rounded-xl border border-[#174C3C]/30 bg-white px-2.5 text-xs font-semibold text-[#174C3C] transition-colors hover:bg-[#EAF2EC]/60"
                       >
                         Schedule {item.crop.name} Next
                       </button>
@@ -638,15 +628,15 @@ export function CropComparisonPanel({
           </div>
 
           {/* 5-Section Side-by-Side Comparison Matrix */}
-          <div className="space-y-3">
+          <div className="space-y-3 border-t border-[#E7EBE7] pt-6">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-              <h3 className="font-display text-sm font-bold text-[#14221A]">
+              <h3 className="font-display text-sm font-semibold text-[#18231E]">
                 Detailed Side-by-Side Comparison Matrix
               </h3>
               <div
                 role="tablist"
                 aria-label="Filter comparison matrix categories"
-                className="flex flex-wrap items-center gap-1 rounded-lg bg-[#EAE8E0] p-1"
+                className="flex flex-wrap items-center gap-1 rounded-xl bg-[#EEF1EE] p-1"
               >
                 {SECTION_TABS.map((tab) => (
                   <button
@@ -655,10 +645,10 @@ export function CropComparisonPanel({
                     role="tab"
                     aria-selected={sectionTab === tab.id}
                     onClick={() => setSectionTab(tab.id)}
-                    className={`rounded-md px-2.5 py-1 text-[11px] font-medium transition-colors whitespace-nowrap ${
+                    className={`rounded-lg px-2.5 py-1 text-[11px] font-medium transition-all whitespace-nowrap ${
                       sectionTab === tab.id
-                        ? 'bg-white text-[#14221A] shadow-sm'
-                        : 'text-[#4B5B51] hover:text-[#14221A]'
+                        ? 'bg-white text-[#18231E] shadow-[0_1px_2px_rgba(20,37,29,0.08)]'
+                        : 'text-[#737D76] hover:text-[#18231E]'
                     }`}
                   >
                     {tab.label}
@@ -667,7 +657,7 @@ export function CropComparisonPanel({
               </div>
             </div>
 
-            {/* Mobile Stacked Comparison Cards (Zero Horizontal Hunting) */}
+            {/* Mobile Stacked Comparison Cards */}
             <div className="space-y-3 md:hidden">
               {crops.map((item, idx) => {
                 const climateCat = item.categories.find((c) => c.id === 'climate');
@@ -676,9 +666,9 @@ export function CropComparisonPanel({
                 return (
                   <article
                     key={item.crop.id}
-                    className="rounded-xl border border-[#E1E8E2] bg-white p-4"
+                    className="rounded-2xl border border-[#E7EBE7] bg-white p-4"
                   >
-                    <div className="flex items-start justify-between gap-2 border-b border-[#E1E8E2] pb-2.5">
+                    <div className="flex items-start justify-between gap-2 border-b border-[#E7EBE7] pb-2.5">
                       <div>
                         <div className="flex items-center gap-1.5">
                           <span
@@ -689,15 +679,15 @@ export function CropComparisonPanel({
                             }}
                             aria-hidden="true"
                           />
-                          <h4 className="font-display text-sm font-bold text-[#17231E]">
+                          <h4 className="font-display text-sm font-semibold text-[#18231E]">
                             {item.crop.name}
                           </h4>
                         </div>
-                        <p className="text-[11px] text-[#65736B]">
+                        <p className="text-[11px] text-[#737D76]">
                           {item.crop.family} · {item.crop.category}
                         </p>
                       </div>
-                      <span className="font-mono text-sm font-bold tabular-nums text-[#174C3C]">
+                      <span className="font-mono text-sm font-semibold tabular-nums text-[#174C3C]">
                         {item.overallScore}/100
                       </span>
                     </div>
@@ -705,8 +695,8 @@ export function CropComparisonPanel({
                     <dl className="mt-3 space-y-2 text-xs">
                       {showSection('suitability') && (
                         <div className="flex justify-between gap-2">
-                          <dt className="text-[#65736B]">Suitability &amp; Confidence</dt>
-                          <dd className="font-medium text-[#17231E]">
+                          <dt className="text-[#737D76]">Suitability &amp; Confidence</dt>
+                          <dd className="font-medium text-[#18231E]">
                             {item.suitabilityCategory} ({item.confidenceLevel})
                           </dd>
                         </div>
@@ -714,22 +704,22 @@ export function CropComparisonPanel({
                       {showSection('climate') && (
                         <>
                           <div className="flex justify-between gap-2">
-                            <dt className="text-[#65736B]">Ideal Temp</dt>
-                            <dd className="font-mono tabular-nums text-[#17231E]">
+                            <dt className="text-[#737D76]">Ideal Temp</dt>
+                            <dd className="font-mono tabular-nums text-[#18231E]">
                               {formatTemp(item.crop.idealTempC[0], unitSystem)}–
                               {formatTemp(item.crop.idealTempC[1], unitSystem)}
                             </dd>
                           </div>
                           <div className="flex justify-between gap-2">
-                            <dt className="text-[#65736B]">Water Need</dt>
-                            <dd className="font-mono tabular-nums text-[#17231E]">
+                            <dt className="text-[#737D76]">Water Need</dt>
+                            <dd className="font-mono tabular-nums text-[#18231E]">
                               {formatRainfall(item.crop.waterNeedMm[0], unitSystem)}–
                               {formatRainfall(item.crop.waterNeedMm[1], unitSystem)}
                             </dd>
                           </div>
                           <div className="flex justify-between gap-2">
-                            <dt className="text-[#65736B]">Climate Fit</dt>
-                            <dd className="font-mono tabular-nums text-[#17231E]">
+                            <dt className="text-[#737D76]">Climate Fit</dt>
+                            <dd className="font-mono tabular-nums text-[#18231E]">
                               {climateCat?.status === 'unavailable'
                                 ? 'NASA Unavailable'
                                 : `${climateCat?.score ?? 0}/100`}
@@ -739,8 +729,8 @@ export function CropComparisonPanel({
                       )}
                       {showSection('soil') && (
                         <div className="flex justify-between gap-2">
-                          <dt className="text-[#65736B]">Soil &amp; pH Fit</dt>
-                          <dd className="text-right font-mono tabular-nums text-[#17231E]">
+                          <dt className="text-[#737D76]">Soil &amp; pH Fit</dt>
+                          <dd className="text-right font-mono tabular-nums text-[#18231E]">
                             {soilCat?.score ?? 0}/100 · pH {item.crop.soilPhRange[0].toFixed(1)}–
                             {item.crop.soilPhRange[1].toFixed(1)}
                           </dd>
@@ -748,8 +738,8 @@ export function CropComparisonPanel({
                       )}
                       {showSection('cultivation') && (
                         <div className="flex justify-between gap-2">
-                          <dt className="text-[#65736B]">Duration &amp; Irrigation</dt>
-                          <dd className="text-right text-[#17231E]">
+                          <dt className="text-[#737D76]">Duration &amp; Irrigation</dt>
+                          <dd className="text-right text-[#18231E]">
                             {item.crop.growingDurationDays[0]}–{item.crop.growingDurationDays[1]}d ·{' '}
                             {item.crop.irrigationDependency}
                           </dd>
@@ -757,8 +747,8 @@ export function CropComparisonPanel({
                       )}
                       {showSection('rotation') && (
                         <div className="flex justify-between gap-2">
-                          <dt className="text-[#65736B]">Rotation &amp; N Balance</dt>
-                          <dd className="text-right font-mono tabular-nums text-[#17231E]">
+                          <dt className="text-[#737D76]">Rotation &amp; N Balance</dt>
+                          <dd className="text-right font-mono tabular-nums text-[#18231E]">
                             {rotCat?.status === 'unavailable'
                               ? 'History Missing'
                               : `${rotCat?.score ?? 0}/100`}{' '}
@@ -776,17 +766,17 @@ export function CropComparisonPanel({
               })}
             </div>
 
-            <div className="hidden overflow-x-auto rounded-lg border border-[#E1E8E2] md:block">
+            <div className="hidden overflow-x-auto rounded-2xl border border-[#E7EBE7] md:block">
               <table className="w-full border-collapse text-left text-xs">
                 <thead>
-                  <tr className="border-b border-[#E1E8E2] bg-[#F7F8F5] text-[#65736B]">
-                    <th className="sticky left-0 z-10 min-w-[130px] bg-[#F7F8F5] px-3 py-3 font-medium sm:min-w-[180px] sm:px-4">
+                  <tr className="border-b border-[#E7EBE7] bg-[#F7F8F6] text-[#737D76]">
+                    <th className="sticky left-0 z-10 min-w-[130px] bg-[#F7F8F6] px-3 py-3 font-medium sm:min-w-[180px] sm:px-4">
                       Comparison Attribute
                     </th>
                     {crops.map((item, idx) => (
                       <th
                         key={item.crop.id}
-                        className="min-w-[205px] px-4 py-3 font-semibold text-[#14221A]"
+                        className="min-w-[205px] px-4 py-3 font-semibold text-[#18231E]"
                       >
                         <div className="flex items-center gap-1.5">
                           <span
@@ -799,7 +789,7 @@ export function CropComparisonPanel({
                           />
                           <span>{item.crop.name}</span>
                         </div>
-                        <span className="block text-[11px] font-normal italic text-[#6B7970]">
+                        <span className="block text-[11px] font-normal italic text-[#737D76]">
                           {item.crop.scientificName} · {item.crop.family}
                         </span>
                       </th>
@@ -807,41 +797,41 @@ export function CropComparisonPanel({
                   </tr>
                 </thead>
 
-                <tbody className="divide-y divide-[#ECEAE3]">
+                <tbody className="divide-y divide-[#E7EBE7]">
                   {/* SECTION 1: SUITABILITY */}
                   {showSection('suitability') && (
                     <>
-                      <tr className="bg-[#F2F6F3]">
+                      <tr className="bg-[#F7F8F6]">
                         <td
                           colSpan={crops.length + 1}
-                          className="px-4 py-2 text-[11px] font-bold uppercase tracking-wider text-[#154734]"
+                          className="px-4 py-2 font-display text-xs font-semibold text-[#174C3C]"
                         >
                           Suitability (Deterministic Engine · 0–100)
                         </td>
                       </tr>
                       <tr>
-                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#4B5B51]">
+                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#445149]">
                           Overall Suitability Score
                         </td>
                         {crops.map((item) => (
                           <td
                             key={item.crop.id}
-                            className="px-4 py-2.5 font-mono font-bold tabular-nums text-[#154734]"
+                            className="px-4 py-2.5 font-mono font-semibold tabular-nums text-[#174C3C]"
                           >
                             {item.overallScore}/100 ({item.suitabilityCategory})
                           </td>
                         ))}
                       </tr>
                       <tr>
-                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#4B5B51]">
+                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#445149]">
                           Climate Score (30 pts)
                         </td>
                         {crops.map((item) => {
                           const cat = item.categories.find((c) => c.id === 'climate');
                           return (
-                            <td key={item.crop.id} className="px-4 py-2.5 text-[#14221A]">
+                            <td key={item.crop.id} className="px-4 py-2.5 text-[#18231E]">
                               {cat?.status === 'unavailable' ? (
-                                <span className="font-medium text-[#92400E]">
+                                <span className="font-medium text-[#9A5B00]">
                                   Unavailable (0/30 pts)
                                 </span>
                               ) : (
@@ -849,7 +839,7 @@ export function CropComparisonPanel({
                                   {cat?.score ?? 0}/100 (+{cat?.contribution ?? 0}/30)
                                 </span>
                               )}
-                              <span className="block text-[11px] text-[#6B7970]">
+                              <span className="block text-[11px] text-[#737D76]">
                                 {cat?.detail}
                               </span>
                             </td>
@@ -857,19 +847,19 @@ export function CropComparisonPanel({
                         })}
                       </tr>
                       <tr>
-                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#4B5B51]">
+                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#445149]">
                           Water Score (25 pts)
                         </td>
                         {crops.map((item) => {
                           const cat = item.categories.find((c) => c.id === 'water');
                           return (
-                            <td key={item.crop.id} className="px-4 py-2.5 text-[#14221A]">
+                            <td key={item.crop.id} className="px-4 py-2.5 text-[#18231E]">
                               <span className="font-mono font-semibold tabular-nums">
                                 {cat?.score !== null && cat?.score !== undefined
                                   ? `${cat.score}/100 (+${cat.contribution}/25)`
                                   : 'Unavailable'}
                               </span>
-                              <span className="block text-[11px] text-[#6B7970]">
+                              <span className="block text-[11px] text-[#737D76]">
                                 {cat?.status === 'partial'
                                   ? 'Partial: rainfall unavailable'
                                   : cat?.detail}
@@ -879,19 +869,19 @@ export function CropComparisonPanel({
                         })}
                       </tr>
                       <tr>
-                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#4B5B51]">
+                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#445149]">
                           Soil Score (20 pts)
                         </td>
                         {crops.map((item) => {
                           const cat = item.categories.find((c) => c.id === 'soil');
                           return (
-                            <td key={item.crop.id} className="px-4 py-2.5 text-[#14221A]">
+                            <td key={item.crop.id} className="px-4 py-2.5 text-[#18231E]">
                               <span className="font-mono font-semibold tabular-nums">
                                 {cat?.score !== null && cat?.score !== undefined
                                   ? `${cat.score}/100 (+${cat.contribution}/20)`
                                   : 'Unavailable'}
                               </span>
-                              <span className="block text-[11px] text-[#6B7970]">
+                              <span className="block text-[11px] text-[#737D76]">
                                 {cat?.status === 'partial'
                                   ? 'Partial: parcel pH missing'
                                   : cat?.detail}
@@ -901,15 +891,15 @@ export function CropComparisonPanel({
                         })}
                       </tr>
                       <tr>
-                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#4B5B51]">
+                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#445149]">
                           Growing-Season Score (15 pts)
                         </td>
                         {crops.map((item) => {
                           const cat = item.categories.find((c) => c.id === 'season');
                           return (
-                            <td key={item.crop.id} className="px-4 py-2.5 text-[#14221A]">
+                            <td key={item.crop.id} className="px-4 py-2.5 text-[#18231E]">
                               {cat?.status === 'unavailable' ? (
-                                <span className="font-medium text-[#92400E]">
+                                <span className="font-medium text-[#9A5B00]">
                                   Unavailable (0/15 pts)
                                 </span>
                               ) : (
@@ -917,7 +907,7 @@ export function CropComparisonPanel({
                                   {cat?.score ?? 0}/100 (+{cat?.contribution ?? 0}/15)
                                 </span>
                               )}
-                              <span className="block text-[11px] text-[#6B7970]">
+                              <span className="block text-[11px] text-[#737D76]">
                                 {cat?.detail}
                               </span>
                             </td>
@@ -925,15 +915,15 @@ export function CropComparisonPanel({
                         })}
                       </tr>
                       <tr>
-                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#4B5B51]">
+                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#445149]">
                           Rotation Score (10 pts)
                         </td>
                         {crops.map((item) => {
                           const cat = item.categories.find((c) => c.id === 'rotation');
                           return (
-                            <td key={item.crop.id} className="px-4 py-2.5 text-[#14221A]">
+                            <td key={item.crop.id} className="px-4 py-2.5 text-[#18231E]">
                               {cat?.status === 'unavailable' ? (
-                                <span className="font-medium text-[#92400E]">
+                                <span className="font-medium text-[#9A5B00]">
                                   Unavailable (no crop history)
                                 </span>
                               ) : (
@@ -941,7 +931,7 @@ export function CropComparisonPanel({
                                   {cat?.score ?? 0}/100 (+{cat?.contribution ?? 0}/10)
                                 </span>
                               )}
-                              <span className="block text-[11px] text-[#6B7970]">
+                              <span className="block text-[11px] text-[#737D76]">
                                 {cat?.detail}
                               </span>
                             </td>
@@ -949,15 +939,15 @@ export function CropComparisonPanel({
                         })}
                       </tr>
                       <tr>
-                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#4B5B51]">
+                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#445149]">
                           Confidence &amp; Completeness
                         </td>
                         {crops.map((item) => (
-                          <td key={item.crop.id} className="px-4 py-2.5 text-[#14221A]">
+                          <td key={item.crop.id} className="px-4 py-2.5 text-[#18231E]">
                             <span className="font-semibold">
                               {item.confidenceLevel}
                             </span>{' '}
-                            <span className="font-mono tabular-nums text-[#4B5B51]">
+                            <span className="font-mono tabular-nums text-[#737D76]">
                               ({item.dataCompletenessPct}% verified)
                             </span>
                           </td>
@@ -969,22 +959,22 @@ export function CropComparisonPanel({
                   {/* SECTION 2: CLIMATE */}
                   {showSection('climate') && (
                     <>
-                      <tr className="bg-[#F2F6F3]">
+                      <tr className="bg-[#F7F8F6]">
                         <td
                           colSpan={crops.length + 1}
-                          className="px-4 py-2 text-[11px] font-bold uppercase tracking-wider text-[#154734]"
+                          className="px-4 py-2 font-display text-xs font-semibold text-[#174C3C]"
                         >
                           Climate (Agronomic Ranges vs. NASA POWER Observations)
                         </td>
                       </tr>
                       <tr>
-                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#4B5B51]">
+                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#445149]">
                           Ideal Temperature Range
                         </td>
                         {crops.map((item) => (
                           <td
                             key={item.crop.id}
-                            className="px-4 py-2.5 font-mono tabular-nums text-[#14221A]"
+                            className="px-4 py-2.5 font-mono tabular-nums text-[#18231E]"
                           >
                             {formatTemp(item.crop.idealTempC[0], unitSystem)} –{' '}
                             {formatTemp(item.crop.idealTempC[1], unitSystem)}
@@ -992,13 +982,13 @@ export function CropComparisonPanel({
                         ))}
                       </tr>
                       <tr>
-                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#4B5B51]">
+                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#445149]">
                           Temperature Tolerance (Frost / Heat)
                         </td>
                         {crops.map((item) => (
                           <td
                             key={item.crop.id}
-                            className="px-4 py-2.5 font-mono tabular-nums text-[#14221A]"
+                            className="px-4 py-2.5 font-mono tabular-nums text-[#18231E]"
                           >
                             <span>
                               Frost:{' '}
@@ -1006,7 +996,7 @@ export function CropComparisonPanel({
                                 ? formatTemp(item.crop.frostSensitivityC, unitSystem)
                                 : 'Unknown'}
                             </span>
-                            <span className="block text-[11px] text-[#6B7970]">
+                            <span className="block text-[11px] text-[#737D76]">
                               Heat stress:{' '}
                               {item.crop.heatStressThresholdC !== null
                                 ? `>${formatTemp(item.crop.heatStressThresholdC, unitSystem)}`
@@ -1016,13 +1006,13 @@ export function CropComparisonPanel({
                         ))}
                       </tr>
                       <tr>
-                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#4B5B51]">
+                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#445149]">
                           Rainfall Requirements
                         </td>
                         {crops.map((item) => (
                           <td
                             key={item.crop.id}
-                            className="px-4 py-2.5 font-mono tabular-nums text-[#14221A]"
+                            className="px-4 py-2.5 font-mono tabular-nums text-[#18231E]"
                           >
                             {formatRainfall(item.crop.rainfallRangeMm[0], unitSystem)} –{' '}
                             {formatRainfall(item.crop.rainfallRangeMm[1], unitSystem)}
@@ -1030,36 +1020,36 @@ export function CropComparisonPanel({
                         ))}
                       </tr>
                       <tr>
-                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#4B5B51]">
+                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#445149]">
                           Seasonal Water Requirements
                         </td>
                         {crops.map((item) => (
-                          <td key={item.crop.id} className="px-4 py-2.5 text-[#14221A]">
+                          <td key={item.crop.id} className="px-4 py-2.5 text-[#18231E]">
                             <span className="font-mono tabular-nums">
                               {formatRainfall(item.crop.waterNeedMm[0], unitSystem)} –{' '}
                               {formatRainfall(item.crop.waterNeedMm[1], unitSystem)}
                             </span>
-                            <span className="block text-[11px] text-[#6B7970]">
+                            <span className="block text-[11px] text-[#737D76]">
                               {item.waterConsiderations}
                             </span>
                           </td>
                         ))}
                       </tr>
                       <tr>
-                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#4B5B51]">
+                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#445149]">
                           Solar Radiation Suitability
                         </td>
                         {crops.map((item) => {
                           const solarMj = nasaData?.summary.avgSolarRadiationMj ?? null;
                           return (
-                            <td key={item.crop.id} className="px-4 py-2.5 text-[#14221A]">
+                            <td key={item.crop.id} className="px-4 py-2.5 text-[#18231E]">
                               {solarMj !== null ? (
                                 <>
-                                  <span className="inline-flex items-center gap-1 font-mono font-semibold tabular-nums text-[#154734]">
+                                  <span className="inline-flex items-center gap-1 font-mono font-semibold tabular-nums text-[#174C3C]">
                                     <Sun className="h-3 w-3" aria-hidden="true" />
                                     {solarMj.toFixed(1)} MJ/m²/day
                                   </span>
-                                  <span className="block text-[11px] text-[#6B7970]">
+                                  <span className="block text-[11px] text-[#737D76]">
                                     {solarMj >= 14
                                       ? 'High irradiance supports biomass accumulation'
                                       : solarMj >= 10
@@ -1068,7 +1058,7 @@ export function CropComparisonPanel({
                                   </span>
                                 </>
                               ) : (
-                                <span className="font-medium text-[#92400E]">
+                                <span className="font-medium text-[#9A5B00]">
                                   Unavailable (NASA POWER ALLSKY_SFC_SW_DWN missing)
                                 </span>
                               )}
@@ -1077,23 +1067,23 @@ export function CropComparisonPanel({
                         })}
                       </tr>
                       <tr>
-                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#4B5B51]">
+                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#445149]">
                           Historical Farm Climate Fit
                         </td>
                         {crops.map((item) => {
                           const cat = item.categories.find((c) => c.id === 'climate');
                           return (
-                            <td key={item.crop.id} className="px-4 py-2.5 text-[#14221A]">
+                            <td key={item.crop.id} className="px-4 py-2.5 text-[#18231E]">
                               {cat?.status === 'unavailable' ? (
-                                <span className="font-medium text-[#92400E]">
+                                <span className="font-medium text-[#9A5B00]">
                                   Cannot verify (NASA POWER unavailable)
                                 </span>
                               ) : (
                                 <>
-                                  <span className="font-semibold text-[#154734]">
+                                  <span className="font-semibold text-[#174C3C]">
                                     {cat?.score}/100 ({cat?.status})
                                   </span>
-                                  <span className="block text-[11px] text-[#6B7970]">
+                                  <span className="block text-[11px] text-[#737D76]">
                                     {cat?.detail}
                                   </span>
                                 </>
@@ -1108,16 +1098,16 @@ export function CropComparisonPanel({
                   {/* SECTION 3: SOIL */}
                   {showSection('soil') && (
                     <>
-                      <tr className="bg-[#F2F6F3]">
+                      <tr className="bg-[#F7F8F6]">
                         <td
                           colSpan={crops.length + 1}
-                          className="px-4 py-2 text-[11px] font-bold uppercase tracking-wider text-[#154734]"
+                          className="px-4 py-2 font-display text-xs font-semibold text-[#174C3C]"
                         >
                           Soil &amp; Nutrient Profile
                         </td>
                       </tr>
                       <tr>
-                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#4B5B51]">
+                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#445149]">
                           Suitable Soil Types
                         </td>
                         {crops.map((item) => {
@@ -1128,14 +1118,14 @@ export function CropComparisonPanel({
                             farm.soilType
                           );
                           return (
-                            <td key={item.crop.id} className="px-4 py-2.5 text-[#14221A]">
+                            <td key={item.crop.id} className="px-4 py-2.5 text-[#18231E]">
                               <span>{item.crop.suitableSoilTypes.join(', ')}</span>
                               <span
                                 className={`block text-[11px] font-medium ${
                                   primaryMatch
-                                    ? 'text-[#154734]'
+                                    ? 'text-[#174C3C]'
                                     : secondaryMatch
-                                      ? 'text-[#92400E]'
+                                      ? 'text-[#9A5B00]'
                                       : 'text-[#B91C1C]'
                                 }`}
                               >
@@ -1150,11 +1140,11 @@ export function CropComparisonPanel({
                         })}
                       </tr>
                       <tr>
-                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#4B5B51]">
+                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#445149]">
                           Soil pH Compatibility
                         </td>
                         {crops.map((item) => (
-                          <td key={item.crop.id} className="px-4 py-2.5 text-[#14221A]">
+                          <td key={item.crop.id} className="px-4 py-2.5 text-[#18231E]">
                             <span className="font-mono tabular-nums">
                               Target pH {item.crop.soilPhRange[0].toFixed(1)}–
                               {item.crop.soilPhRange[1].toFixed(1)}
@@ -1162,11 +1152,11 @@ export function CropComparisonPanel({
                             <span
                               className={`block text-[11px] ${
                                 !validPh
-                                  ? 'font-medium text-[#92400E]'
+                                  ? 'font-medium text-[#9A5B00]'
                                   : farm.health.phLevel >= item.crop.soilPhRange[0] &&
                                       farm.health.phLevel <= item.crop.soilPhRange[1]
-                                    ? 'text-[#154734]'
-                                    : 'text-[#92400E]'
+                                    ? 'text-[#174C3C]'
+                                    : 'text-[#9A5B00]'
                               }`}
                             >
                               {validPh
@@ -1177,28 +1167,28 @@ export function CropComparisonPanel({
                         ))}
                       </tr>
                       <tr>
-                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#4B5B51]">
+                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#445149]">
                           Drainage Preference
                         </td>
                         {crops.map((item) => (
-                          <td key={item.crop.id} className="px-4 py-2.5 text-[#4B5B51]">
+                          <td key={item.crop.id} className="px-4 py-2.5 text-[#737D76]">
                             {item.crop.soilDrainagePreference}
                           </td>
                         ))}
                       </tr>
                       <tr>
-                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#4B5B51]">
+                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#445149]">
                           Nutrient Requirements
                         </td>
                         {crops.map((item) => (
-                          <td key={item.crop.id} className="px-4 py-2.5 text-[#14221A]">
+                          <td key={item.crop.id} className="px-4 py-2.5 text-[#18231E]">
                             <span className="font-semibold">
                               {item.crop.nutrientRequirements.nitrogenDemandLevel} N demand
                             </span>
-                            <span className="block text-[11px] text-[#6B7970]">
+                            <span className="block text-[11px] text-[#737D76]">
                               {item.crop.nutrientRequirements.npkGuidanceKgHa}
                             </span>
-                            <span className="block text-[11px] text-[#5F6E65]">
+                            <span className="block text-[11px] text-[#737D76]">
                               Micronutrients:{' '}
                               {item.crop.nutrientRequirements.keyMicronutrients.join(', ')}
                             </span>
@@ -1211,32 +1201,32 @@ export function CropComparisonPanel({
                   {/* SECTION 4: CULTIVATION */}
                   {showSection('cultivation') && (
                     <>
-                      <tr className="bg-[#F2F6F3]">
+                      <tr className="bg-[#F7F8F6]">
                         <td
                           colSpan={crops.length + 1}
-                          className="px-4 py-2 text-[11px] font-bold uppercase tracking-wider text-[#154734]"
+                          className="px-4 py-2 font-display text-xs font-semibold text-[#174C3C]"
                         >
                           Cultivation &amp; Field Agronomics
                         </td>
                       </tr>
                       <tr>
-                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#4B5B51]">
+                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#445149]">
                           Preferred Growing Seasons
                         </td>
                         {crops.map((item) => (
-                          <td key={item.crop.id} className="px-4 py-2.5 text-[#14221A]">
+                          <td key={item.crop.id} className="px-4 py-2.5 text-[#18231E]">
                             {item.crop.preferredSeasons.join(' · ')}
                           </td>
                         ))}
                       </tr>
                       <tr>
-                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#4B5B51]">
+                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#445149]">
                           Approximate Growing Duration
                         </td>
                         {crops.map((item) => (
                           <td
                             key={item.crop.id}
-                            className="px-4 py-2.5 font-mono tabular-nums text-[#14221A]"
+                            className="px-4 py-2.5 font-mono tabular-nums text-[#18231E]"
                           >
                             {item.crop.growingDurationDays[0]}–
                             {item.crop.growingDurationDays[1]} days
@@ -1244,43 +1234,43 @@ export function CropComparisonPanel({
                         ))}
                       </tr>
                       <tr>
-                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#4B5B51]">
+                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#445149]">
                           Irrigation Dependency
                         </td>
                         {crops.map((item) => (
-                          <td key={item.crop.id} className="px-4 py-2.5 text-[#14221A]">
+                          <td key={item.crop.id} className="px-4 py-2.5 text-[#18231E]">
                             <span className="font-semibold">
                               {item.crop.irrigationDependency}
                             </span>
-                            <span className="block text-[11px] text-[#6B7970]">
+                            <span className="block text-[11px] text-[#737D76]">
                               Parcel setup: {farm.irrigation}
                             </span>
                           </td>
                         ))}
                       </tr>
                       <tr>
-                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#4B5B51]">
+                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#445149]">
                           Root Depth
                         </td>
                         {crops.map((item) => (
-                          <td key={item.crop.id} className="px-4 py-2.5 font-medium text-[#14221A]">
+                          <td key={item.crop.id} className="px-4 py-2.5 font-medium text-[#18231E]">
                             {item.crop.rootDepth}
                           </td>
                         ))}
                       </tr>
                       <tr>
-                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#4B5B51]">
+                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#445149]">
                           Common Diseases &amp; Risks
                         </td>
                         {crops.map((item) => (
-                          <td key={item.crop.id} className="px-4 py-2.5 text-[#4B5B51]">
-                            <span className="font-medium text-[#14221A]">
+                          <td key={item.crop.id} className="px-4 py-2.5 text-[#445149]">
+                            <span className="font-medium text-[#18231E]">
                               Diseases: {item.crop.cultivationRisks.commonDiseases.slice(0, 2).join(', ')}
                             </span>
-                            <span className="block text-[11px] text-[#6B7970]">
+                            <span className="block text-[11px] text-[#737D76]">
                               Pests: {item.crop.cultivationRisks.pestPressures.slice(0, 2).join(', ')}
                             </span>
-                            <span className="block text-[11px] text-[#92400E]">
+                            <span className="block text-[11px] text-[#9A5B00]">
                               Abiotic: {item.crop.cultivationRisks.abioticRisks[0]}
                             </span>
                           </td>
@@ -1292,50 +1282,50 @@ export function CropComparisonPanel({
                   {/* SECTION 5: ROTATION */}
                   {showSection('rotation') && (
                     <>
-                      <tr className="bg-[#F2F6F3]">
+                      <tr className="bg-[#F7F8F6]">
                         <td
                           colSpan={crops.length + 1}
-                          className="px-4 py-2 text-[11px] font-bold uppercase tracking-wider text-[#154734]"
+                          className="px-4 py-2 font-display text-xs font-semibold text-[#174C3C]"
                         >
                           Rotation &amp; Cropping History Compatibility
                         </td>
                       </tr>
                       <tr>
-                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#4B5B51]">
+                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#445149]">
                           Botanical Family
                         </td>
                         {crops.map((item) => (
-                          <td key={item.crop.id} className="px-4 py-2.5 font-semibold text-[#14221A]">
+                          <td key={item.crop.id} className="px-4 py-2.5 font-semibold text-[#18231E]">
                             {item.crop.family}
                           </td>
                         ))}
                       </tr>
                       <tr>
-                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#4B5B51]">
+                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#445149]">
                           Best Preceding Crops
                         </td>
                         {crops.map((item) => (
-                          <td key={item.crop.id} className="px-4 py-2.5 text-[#14221A]">
+                          <td key={item.crop.id} className="px-4 py-2.5 text-[#18231E]">
                             {item.crop.rotationCompatibility.bestPrecededBy.join(', ')}
                           </td>
                         ))}
                       </tr>
                       <tr>
-                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#4B5B51]">
+                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#445149]">
                           Avoid Planting After
                         </td>
                         {crops.map((item) => (
-                          <td key={item.crop.id} className="px-4 py-2.5 text-[#92400E]">
+                          <td key={item.crop.id} className="px-4 py-2.5 text-[#9A5B00]">
                             {item.crop.rotationCompatibility.avoidAfter.join(', ')}
                           </td>
                         ))}
                       </tr>
                       <tr>
-                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#4B5B51]">
+                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#445149]">
                           Nitrogen &amp; Residue Effects
                         </td>
                         {crops.map((item) => (
-                          <td key={item.crop.id} className="px-4 py-2.5 text-[#14221A]">
+                          <td key={item.crop.id} className="px-4 py-2.5 text-[#18231E]">
                             <span className="font-mono font-semibold tabular-nums">
                               {item.crop.nutrientRequirements.nitrogenRole} (
                               {item.crop.nutrientRequirements.nitrogenDeltaKgHa >= 0
@@ -1343,14 +1333,14 @@ export function CropComparisonPanel({
                                 : item.crop.nutrientRequirements.nitrogenDeltaKgHa}{' '}
                               kg/ha)
                             </span>
-                            <span className="block text-[11px] text-[#6B7970]">
+                            <span className="block text-[11px] text-[#737D76]">
                               {item.crop.rotationCompatibility.residueBenefit}
                             </span>
                           </td>
                         ))}
                       </tr>
                       <tr>
-                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#4B5B51]">
+                        <td className="sticky left-0 bg-white px-4 py-2.5 font-medium text-[#445149]">
                           Farm Crop History &amp; Plan Fit
                         </td>
                         {crops.map((item) => {
@@ -1359,9 +1349,9 @@ export function CropComparisonPanel({
                             item.crop.id
                           );
                           return (
-                            <td key={item.crop.id} className="px-4 py-2.5 text-[#14221A]">
+                            <td key={item.crop.id} className="px-4 py-2.5 text-[#18231E]">
                               {rotCat?.status === 'unavailable' ? (
-                                <span className="font-medium text-[#92400E]">
+                                <span className="font-medium text-[#9A5B00]">
                                   No crop history recorded on parcel
                                 </span>
                               ) : (
@@ -1374,7 +1364,7 @@ export function CropComparisonPanel({
                                       className={`block text-[11px] ${
                                         rotPlanInfo.hasConflict
                                           ? 'text-[#991B1B]'
-                                          : 'text-[#154734]'
+                                          : 'text-[#174C3C]'
                                       }`}
                                     >
                                       {rotPlanInfo.hasConflict

@@ -37,33 +37,33 @@ export function SettingsView({
 
       <form
         onSubmit={handleSave}
-        className="max-w-2xl rounded-xl border border-[#E1E8E2] bg-white p-6"
+        className="max-w-2xl rounded-2xl border border-[#E7EBE7] bg-white p-6"
       >
-        <h2 className="font-display text-base font-semibold text-[#17231E]">
+        <h2 className="font-display text-base font-semibold tracking-[-0.015em] text-[#18231E]">
           Regional Units &amp; Agronomy Thresholds
         </h2>
-        <p className="mt-0.5 text-xs text-[#65736B]">
+        <p className="mt-0.5 text-xs text-[#737D76]">
           Preferences persist locally in your browser without requiring user login.
         </p>
 
         <div className="mt-5 space-y-5">
           <div>
-            <span className="block text-xs font-medium text-[#17231E]">
+            <span className="block text-xs font-medium text-[#18231E]">
               Measurement Unit System
             </span>
-            <p className="mt-0.5 text-xs text-[#65736B]">
+            <p className="mt-0.5 text-xs text-[#737D76]">
               Updates land area, temperature, precipitation, and wind units across all charts and tables.
             </p>
-            <div className="mt-2.5 inline-flex flex-wrap rounded-lg bg-[#E6ECE7] p-1">
+            <div className="mt-2.5 grid w-full grid-cols-1 gap-1 rounded-xl bg-[#EEF1EE] p-1 sm:inline-flex sm:w-auto">
               <button
                 type="button"
                 onClick={() =>
                   setDraft((d) => ({ ...d, unitSystem: 'imperial' }))
                 }
-                className={`rounded-md px-3.5 py-1.5 text-xs font-medium transition-colors ${
+                className={`rounded-lg px-3.5 py-2 text-xs font-medium transition-colors ${
                   draft.unitSystem === 'imperial'
-                    ? 'bg-white text-[#17231E] shadow-sm'
-                    : 'text-[#65736B] hover:text-[#17231E]'
+                    ? 'bg-white font-semibold text-[#18231E] shadow-xs'
+                    : 'text-[#737D76] hover:text-[#18231E]'
                 }`}
               >
                 Imperial (Acres · °F · in)
@@ -71,10 +71,10 @@ export function SettingsView({
               <button
                 type="button"
                 onClick={() => setDraft((d) => ({ ...d, unitSystem: 'metric' }))}
-                className={`rounded-md px-3.5 py-1.5 text-xs font-medium transition-colors ${
+                className={`rounded-lg px-3.5 py-2 text-xs font-medium transition-colors ${
                   draft.unitSystem === 'metric'
-                    ? 'bg-white text-[#17231E] shadow-sm'
-                    : 'text-[#65736B] hover:text-[#17231E]'
+                    ? 'bg-white font-semibold text-[#18231E] shadow-xs'
+                    : 'text-[#737D76] hover:text-[#18231E]'
                 }`}
               >
                 Metric (Hectares · °C · mm)
@@ -86,7 +86,7 @@ export function SettingsView({
             <div>
               <label
                 htmlFor="settings-rotation-target"
-                className="block text-xs font-medium text-[#17231E]"
+                className="block text-xs font-medium text-[#18231E]"
               >
                 Target Rotation Efficiency Score
               </label>
@@ -102,14 +102,14 @@ export function SettingsView({
                     rotationTargetScore: Number(e.target.value),
                   }))
                 }
-                className="mt-1.5 h-10 w-full rounded-lg border border-[#D4DDD6] bg-white px-3 font-mono text-sm tabular-nums text-[#17231E] focus:border-[#174C3C] focus:outline-none"
+                className="mt-1.5 h-10 w-full rounded-xl border border-[#E7EBE7] bg-white px-3.5 font-mono text-sm tabular-nums text-[#18231E] focus:border-[#174C3C] focus:outline-none"
               />
             </div>
 
             <div>
               <label
                 htmlFor="settings-moisture-threshold"
-                className="block text-xs font-medium text-[#17231E]"
+                className="block text-xs font-medium text-[#18231E]"
               >
                 Moisture Stress Alert Threshold (%)
               </label>
@@ -125,12 +125,12 @@ export function SettingsView({
                     moistureWarningThreshold: Number(e.target.value),
                   }))
                 }
-                className="mt-1.5 h-10 w-full rounded-lg border border-[#D4DDD6] bg-white px-3 font-mono text-sm tabular-nums text-[#17231E] focus:border-[#174C3C] focus:outline-none"
+                className="mt-1.5 h-10 w-full rounded-xl border border-[#E7EBE7] bg-white px-3.5 font-mono text-sm tabular-nums text-[#18231E] focus:border-[#174C3C] focus:outline-none"
               />
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[#E1E8E2] pt-5">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[#E7EBE7] pt-5">
             <Button
               variant="outline"
               onClick={() => setConfirmResetOpen(true)}

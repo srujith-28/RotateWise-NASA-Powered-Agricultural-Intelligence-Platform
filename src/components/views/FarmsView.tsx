@@ -58,7 +58,7 @@ export function FarmsView({
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="relative w-full sm:max-w-sm">
           <Search
-            className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#65736B]"
+            className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-[#737D76]"
             aria-hidden="true"
           />
           <label htmlFor="farm-search-input" className="sr-only">
@@ -70,10 +70,10 @@ export function FarmsView({
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Filter by name, location, soil, or crop..."
-            className="h-10 w-full rounded-lg border border-[#D4DDD6] bg-white pr-3 pl-9 text-sm text-[#17231E] focus:border-[#174C3C] focus:outline-none"
+            className="h-10 w-full rounded-xl border border-[#E7EBE7] bg-white pr-3.5 pl-10 text-sm text-[#18231E] focus:border-[#174C3C] focus:outline-none"
           />
         </div>
-        <p className="font-mono text-xs tabular-nums text-[#65736B]">
+        <p className="font-mono text-xs tabular-nums text-[#737D76]">
           Showing {filtered.length} of {farms.length} farms
         </p>
       </div>
@@ -100,10 +100,10 @@ export function FarmsView({
             return (
               <article
                 key={farm.id}
-                className={`flex flex-col overflow-hidden rounded-xl border bg-white ${
+                className={`flex flex-col overflow-hidden rounded-2xl border bg-white transition-colors ${
                   isActive
                     ? 'border-[#174C3C] ring-1 ring-[#174C3C]/15'
-                    : 'border-[#E1E8E2]'
+                    : 'border-[#E7EBE7] hover:border-[#C5D1C8]'
                 }`}
               >
                 <div className="relative h-40 w-full overflow-hidden bg-[#EAF2EC]">
@@ -124,10 +124,10 @@ export function FarmsView({
                 <div className="flex flex-1 flex-col p-5">
                   <div className="flex items-start justify-between gap-2">
                     <div>
-                      <h2 className="font-display text-base font-semibold text-[#17231E]">
+                      <h2 className="font-display text-base font-semibold text-[#18231E]">
                         {farm.name}
                       </h2>
-                      <p className="mt-0.5 text-xs text-[#65736B]">
+                      <p className="mt-0.5 text-xs text-[#737D76]">
                         {farm.location}
                       </p>
                     </div>
@@ -147,48 +147,48 @@ export function FarmsView({
                     </div>
                   </div>
 
-                  <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2.5 border-t border-[#E1E8E2] pt-4 text-xs">
+                  <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2.5 border-t border-[#E7EBE7] pt-4 text-xs">
                     <div>
-                      <dt className="text-[#65736B]">Land Area</dt>
-                      <dd className="mt-0.5 font-mono font-semibold tabular-nums text-[#17231E]">
+                      <dt className="text-[#737D76]">Land Area</dt>
+                      <dd className="mt-0.5 font-mono font-semibold tabular-nums text-[#18231E]">
                         {formatArea(farm.landAreaAcres, unitSystem)}
                       </dd>
                     </div>
                     <div>
-                      <dt className="text-[#65736B]">Current Crop</dt>
-                      <dd className="mt-0.5 font-semibold text-[#17231E]">
+                      <dt className="text-[#737D76]">Current Crop</dt>
+                      <dd className="mt-0.5 font-semibold text-[#18231E]">
                         {farm.currentCropName}
                       </dd>
                     </div>
                     <div>
-                      <dt className="text-[#65736B]">Soil Type &amp; pH</dt>
-                      <dd className="mt-0.5 text-[#17231E]">
+                      <dt className="text-[#737D76]">Soil Type &amp; pH</dt>
+                      <dd className="mt-0.5 text-[#18231E]">
                         {farm.soilType} ({farm.health.phLevel.toFixed(1)})
                       </dd>
                     </div>
                     <div>
-                      <dt className="text-[#65736B]">Irrigation</dt>
-                      <dd className="mt-0.5 text-[#17231E]">
+                      <dt className="text-[#737D76]">Irrigation</dt>
+                      <dd className="mt-0.5 text-[#18231E]">
                         {farm.irrigation}
                       </dd>
                     </div>
                     <div className="col-span-2">
-                      <dt className="text-[#65736B]">Coordinates</dt>
-                      <dd className="mt-0.5 font-mono tabular-nums text-[#65736B]">
+                      <dt className="text-[#737D76]">Coordinates</dt>
+                      <dd className="mt-0.5 font-mono tabular-nums text-[#737D76]">
                         {farm.coordinates.lat.toFixed(4)}°,{' '}
                         {farm.coordinates.lng.toFixed(4)}°
                       </dd>
                     </div>
                   </dl>
 
-                  <div className="mt-5 flex items-center justify-between gap-2 border-t border-[#E1E8E2] pt-4">
+                  <div className="mt-5 flex items-center justify-between gap-2 border-t border-[#E7EBE7] pt-4">
                     <button
                       type="button"
                       onClick={() => onSelectFarm(farm.id)}
-                      className={`h-9 rounded-lg px-3 text-xs font-medium transition-colors whitespace-nowrap ${
+                      className={`h-9 rounded-xl px-3.5 text-xs font-medium transition-colors whitespace-nowrap ${
                         isActive
                           ? 'bg-[#EAF2EC] text-[#174C3C]'
-                          : 'bg-[#174C3C] text-white hover:bg-[#113A2E]'
+                          : 'bg-[#174C3C] text-white hover:bg-[#133F32]'
                       }`}
                     >
                       {isActive ? 'Selected Farm' : 'Set Active'}
@@ -199,7 +199,7 @@ export function FarmsView({
                         type="button"
                         onClick={() => onOpenEdit(farm)}
                         aria-label={`Edit ${farm.name}`}
-                        className="inline-flex h-9 items-center gap-1 rounded-lg border border-[#D4DDD6] bg-white px-2.5 text-xs font-medium text-[#17231E] hover:bg-[#F7F8F5]"
+                        className="inline-flex h-9 items-center gap-1 rounded-xl border border-[#E7EBE7] bg-white px-3 text-xs font-medium text-[#18231E] transition-colors hover:bg-[#F7F8F6]"
                       >
                         <Edit3 className="h-3.5 w-3.5" aria-hidden="true" />
                         <span>Edit</span>
@@ -209,7 +209,7 @@ export function FarmsView({
                         type="button"
                         onClick={() => setPendingDeleteFarm(farm)}
                         aria-label={`Delete ${farm.name}`}
-                        className="inline-flex h-9 items-center gap-1 rounded-lg border border-[#E5C5C5] bg-white px-2.5 text-xs font-medium text-[#B91C1C] hover:bg-[#FEF2F2]"
+                        className="inline-flex h-9 items-center gap-1 rounded-xl border border-[#EBD2D2] bg-white px-2.5 text-xs font-medium text-[#B91C1C] transition-colors hover:bg-[#FEF2F2]"
                       >
                         <Trash2 className="h-3.5 w-3.5" aria-hidden="true" />
                       </button>

@@ -23,7 +23,7 @@ export function MetricTooltip({ label, description }: MetricTooltipProps) {
         onBlur={() => setOpen(false)}
         aria-label={`Explain ${label}`}
         aria-describedby={open ? tooltipId : undefined}
-        className="inline-flex h-6 w-6 items-center justify-center rounded-md text-[#728077] hover:bg-[#F2F6F3] hover:text-[#154734] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#154734]"
+        className="inline-flex h-6 w-6 items-center justify-center rounded-lg text-[#737D76] transition-colors hover:bg-[#EAF2EC]/70 hover:text-[#174C3C] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#174C3C]"
       >
         <HelpCircle className="h-3.5 w-3.5" aria-hidden="true" />
       </button>
@@ -32,10 +32,10 @@ export function MetricTooltip({ label, description }: MetricTooltipProps) {
         <span
           id={tooltipId}
           role="tooltip"
-          className="absolute bottom-full left-1/2 z-40 mb-2 w-60 -translate-x-1/2 rounded-lg border border-[#D8D5CB] bg-[#14221A] px-3 py-2 text-left text-[11px] font-normal leading-relaxed text-[#F2F6F3] shadow-lg"
+          className="absolute bottom-full left-1/2 z-40 mb-2 w-60 -translate-x-1/2 rounded-xl border border-[#23382D] bg-[#14251D] px-3.5 py-2.5 text-left text-[11px] font-normal leading-relaxed text-[#E7EBE7] shadow-[0_12px_28px_rgba(20,37,29,0.28)]"
         >
           <span className="block font-semibold text-white">{label}</span>
-          <span className="mt-0.5 block text-[#D3E2D8]">{description}</span>
+          <span className="mt-1 block text-[#BFD0C5]">{description}</span>
         </span>
       )}
     </span>

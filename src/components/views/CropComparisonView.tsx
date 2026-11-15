@@ -3,14 +3,13 @@ import { useMemo } from 'react';
 import { CROP_KNOWLEDGE_DATABASE } from '../../data/cropKnowledgeDb';
 import type { UseNasaPowerClimateResult } from '../../hooks/useNasaPowerClimate';
 import { formatRainfall, formatTemp } from '../../lib/agronomy';
-import { evaluateCropsForFarm } from '../../lib/cropSuitabilityEngine';
+import { evaluateCropsForFarm, knowledgeEntryToCropProfile } from '../../lib/cropSuitabilityEngine';
 import type {
   CropKnowledgeEntry,
   CropProfile,
   Farm,
   NavSection,
 } from '../../types/rotatewise';
-import { knowledgeEntryToCropProfile } from '../../lib/cropSuitabilityEngine';
 import { EmptyState } from '../common/StateFeedback';
 import { CropComparisonPanel } from '../crops/CropComparisonPanel';
 import { Button } from '../ui/Button';
@@ -67,7 +66,7 @@ export function CropComparisonView({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <PageHeader
         breadcrumb="Crop Comparison"
         title="Side-by-Side Crop Comparison"
@@ -75,16 +74,16 @@ export function CropComparisonView({
         classification={nasaDataset ? 'suitability' : 'insufficient'}
         metadata={
           <>
-            <span className="font-mono tabular-nums text-[#17231E]">
+            <span className="font-mono tabular-nums text-[#18231E]">
               {farm.coordinates.lat.toFixed(4)}°, {farm.coordinates.lng.toFixed(4)}°
             </span>
-            <span aria-hidden="true">·</span>
+            <span className="text-[#C5CEC7]" aria-hidden="true">·</span>
             <span>{farm.soilType}</span>
-            <span aria-hidden="true">·</span>
+            <span className="text-[#C5CEC7]" aria-hidden="true">·</span>
             <span className="font-mono tabular-nums">
               pH {farm.health.phLevel.toFixed(1)}
             </span>
-            <span aria-hidden="true">·</span>
+            <span className="text-[#C5CEC7]" aria-hidden="true">·</span>
             <span>{farm.irrigation}</span>
           </>
         }
@@ -111,7 +110,7 @@ export function CropComparisonView({
       />
 
       {/* Climate Anchor Bar */}
-      <div className="flex flex-col gap-3 rounded-xl border border-[#E1E8E2] bg-white p-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-3 rounded-2xl border border-[#E7EBE7] bg-white p-5 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-start gap-2.5 text-xs">
           <Satellite
             className="mt-0.5 h-4 w-4 shrink-0 text-[#174C3C]"
@@ -119,7 +118,7 @@ export function CropComparisonView({
           />
           <div>
             <div className="flex flex-wrap items-center gap-2">
-              <span className="font-semibold text-[#17231E]">
+              <span className="font-semibold text-[#18231E]">
                 {nasaDataset
                   ? `NASA POWER (${nasaDataset.startDate} to ${nasaDataset.endDate})`
                   : nasaClimate.status === 'loading'
@@ -130,7 +129,7 @@ export function CropComparisonView({
                 category={nasaDataset ? 'nasa' : 'insufficient'}
               />
             </div>
-            <p className="mt-1 text-[#65736B]">
+            <p className="mt-1 text-[#737D76]">
               {nasaDataset
                 ? `Mean ${formatTemp(nasaDataset.summary.meanTempC ?? 0, unitSystem)} · Rainfall ${formatRainfall(nasaDataset.summary.totalRainfallMm ?? 0, unitSystem)} (${nasaDataset.summary.validDayCount} observed days)`
                 : 'Climate & rainfall comparison factors remain unverified until NASA POWER observations load.'}

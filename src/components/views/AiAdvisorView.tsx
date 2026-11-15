@@ -114,14 +114,14 @@ export function AiAdvisorView({
         subtitle="Context-grounded crop rotation and soil stewardship consultation powered by the server-side advisor module."
         classification={geminiConfigured ? 'suitability' : 'demo'}
         actions={
-          <span className="rounded-lg border border-[#E1E8E2] bg-white px-3 py-1.5 text-xs font-semibold text-[#174C3C]">
+          <span className="inline-flex h-9 items-center rounded-xl border border-[#E7EBE7] bg-white px-3.5 text-xs font-semibold text-[#174C3C]">
             {geminiConfigured ? 'Gemini Server Integration Active' : 'Local Agronomy Demo Mode'}
           </span>
         }
       />
 
-      <div className="flex items-start gap-2.5 rounded-xl border border-[#DCE5DF] bg-[#F2F6F3] px-4 py-3 text-xs text-[#284737]">
-        <Info className="mt-0.5 h-4 w-4 shrink-0 text-[#154734]" aria-hidden="true" />
+      <div className="flex items-start gap-2.5 rounded-2xl bg-[#EAF2EC] px-4 py-3 text-xs text-[#174C3C]">
+        <Info className="mt-0.5 h-4 w-4 shrink-0 text-[#174C3C]" aria-hidden="true" />
         <span>
           {notice ??
             (geminiConfigured
@@ -130,40 +130,47 @@ export function AiAdvisorView({
         </span>
       </div>
 
-      <div className="rounded-xl border border-[#E4E2DA] bg-white p-5 shadow-[0_1px_2px_rgba(18,43,29,0.03)]">
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#ECEAE3] pb-3">
-          <div className="flex items-center gap-2 text-xs text-[#4B5B51]">
-            <Bot className="h-4 w-4 text-[#2E8B57]" aria-hidden="true" />
+      <section
+        aria-label="Agronomy consultation console"
+        className="rounded-2xl border border-[#E7EBE7] bg-white p-5 sm:p-6"
+      >
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#E7EBE7] pb-4">
+          <div className="flex items-center gap-2 text-xs text-[#737D76]">
+            <Bot className="h-4 w-4 text-[#174C3C]" aria-hidden="true" />
             <span>
               Active context:{' '}
-              <strong className="text-[#14221A]">
+              <strong className="font-semibold text-[#18231E]">
                 {farm ? `${farm.name} (${farm.currentCropName})` : 'None'}
               </strong>
             </span>
           </div>
 
-          <label className="flex items-center gap-2 text-xs font-medium text-[#14221A]">
+          <label className="flex cursor-pointer items-center gap-2 text-xs font-medium text-[#18231E]">
             <input
               type="checkbox"
               checked={includeContext}
               onChange={(e) => setIncludeContext(e.target.checked)}
-              className="h-4 w-4 rounded accent-[#154734]"
+              className="h-4 w-4 rounded accent-[#174C3C]"
             />
             <span>Attach farm soil &amp; climate profile</span>
           </label>
         </div>
 
-        <div className="mt-4 max-h-[380px] space-y-4 overflow-y-auto pr-1">
+        <div className="mt-5 max-h-[420px] space-y-4 overflow-y-auto pr-1">
           {messages.map((msg) => (
             <div
               key={msg.id}
-              className={`rounded-xl p-4 text-sm leading-relaxed ${
+              className={`rounded-2xl p-4 text-sm leading-relaxed ${
                 msg.role === 'user'
-                  ? 'ml-auto max-w-2xl bg-[#154734] text-white'
-                  : 'mr-auto max-w-3xl border border-[#E4E2DA] bg-[#FAF9F5] text-[#14221A]'
+                  ? 'ml-auto max-w-2xl bg-[#14251D] text-white'
+                  : 'mr-auto max-w-3xl bg-[#F7F8F6] text-[#18231E]'
               }`}
             >
-              <div className="mb-1.5 flex items-center justify-between gap-3 text-[11px] opacity-80">
+              <div
+                className={`mb-2 flex items-center justify-between gap-3 text-[11px] ${
+                  msg.role === 'user' ? 'text-[#B9CEC0]' : 'text-[#737D76]'
+                }`}
+              >
                 <span className="font-semibold">
                   {msg.role === 'user'
                     ? 'Farm Manager'
@@ -171,28 +178,28 @@ export function AiAdvisorView({
                       ? 'RotateWise AI (Gemini)'
                       : 'RotateWise Agronomy Demo'}
                 </span>
-                <span className="font-mono">{msg.timestamp}</span>
+                <span className="font-mono tabular-nums">{msg.timestamp}</span>
               </div>
               <p className="whitespace-pre-line">{msg.content}</p>
             </div>
           ))}
           {loading && (
-            <div className="mr-auto max-w-md rounded-xl border border-[#E4E2DA] bg-[#FAF9F5] p-4 text-xs text-[#4B5B51]">
+            <div className="mr-auto max-w-md rounded-2xl bg-[#F7F8F6] p-4 text-xs text-[#737D76]">
               Evaluating soil, rotation sequence, and climate profile...
             </div>
           )}
         </div>
 
-        <div className="mt-4 border-t border-[#ECEAE3] pt-4">
-          <p className="text-xs font-medium text-[#6B7970]">Suggested Prompts</p>
-          <div className="mt-2 flex flex-wrap gap-2">
+        <div className="mt-5 border-t border-[#E7EBE7] pt-4">
+          <p className="text-xs font-medium text-[#737D76]">Suggested Prompts</p>
+          <div className="mt-2.5 flex flex-wrap gap-2">
             {PRESET_PROMPTS.map((p) => (
               <button
                 key={p}
                 type="button"
                 disabled={!farm || loading}
                 onClick={() => sendQuestion(p)}
-                className="rounded-lg border border-[#D8D5CB] bg-[#FBFBF9] px-3 py-1.5 text-left text-xs font-medium text-[#14221A] hover:bg-[#F2F6F3] disabled:opacity-50"
+                className="rounded-xl border border-[#E7EBE7] bg-[#F7F8F6] px-3 py-2 text-left text-xs font-medium text-[#18231E] transition-colors hover:bg-[#EAF2EC] disabled:opacity-50"
               >
                 {p}
               </button>
@@ -204,7 +211,7 @@ export function AiAdvisorView({
               e.preventDefault();
               sendQuestion(input);
             }}
-            className="mt-4 flex gap-2.5"
+            className="mt-4 flex flex-col gap-2.5 sm:flex-row"
           >
             <label htmlFor="advisor-question-input" className="sr-only">
               Ask AI Farm Advisor
@@ -220,19 +227,19 @@ export function AiAdvisorView({
                   ? `Ask about ${farm.name}'s crop rotation, soil health, or climate risks...`
                   : 'Select a farm first...'
               }
-              className="h-11 flex-1 rounded-lg border border-[#D8D5CB] bg-white px-3.5 text-sm text-[#14221A] focus:border-[#154734] focus:outline-none disabled:bg-[#F6F5F0]"
+              className="h-11 flex-1 rounded-xl border border-[#E7EBE7] bg-white px-3.5 text-sm text-[#18231E] focus:border-[#174C3C] focus:outline-none disabled:bg-[#F7F8F6]"
             />
             <button
               type="submit"
               disabled={!farm || !input.trim() || loading}
-              className="inline-flex h-11 items-center gap-2 rounded-lg bg-[#154734] px-4 text-sm font-medium text-white hover:bg-[#0F3527] disabled:opacity-50 whitespace-nowrap"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#174C3C] px-4 text-sm font-medium text-white shadow-[0_1px_2px_rgba(20,37,29,0.12)] transition-colors hover:bg-[#133F32] disabled:opacity-50 whitespace-nowrap"
             >
               <Send className="h-4 w-4" aria-hidden="true" />
               <span>Ask Advisor</span>
             </button>
           </form>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

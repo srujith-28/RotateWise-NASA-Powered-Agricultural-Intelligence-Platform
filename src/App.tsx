@@ -489,7 +489,7 @@ export default function App() {
   };
 
   return (
-    <div className="flex min-h-screen bg-[#F5F7F5] text-[#17231E]">
+    <div className="flex min-h-screen bg-[#F7F8F6] text-[#18231E]">
       <Sidebar
         activeSection={activeSection}
         onSelectSection={setActiveSection}
@@ -519,7 +519,8 @@ export default function App() {
           onNavigate={setActiveSection}
         />
 
-        <main className="mx-auto w-full max-w-[1360px] flex-1 p-4 pb-24 sm:p-6 sm:pb-24 lg:p-8 lg:pb-8">
+        <main className="mx-auto w-full max-w-[1380px] flex-1 px-4 pt-6 pb-24 sm:px-6 sm:pt-8 sm:pb-24 lg:px-10 lg:py-8">
+          <div key={activeSection} className="rw-view-enter">
           {activeSection === 'dashboard' && (
             <DashboardView
               farm={activeFarm}
@@ -684,6 +685,7 @@ export default function App() {
               onToast={addToast}
             />
           )}
+          </div>
         </main>
       </div>
 

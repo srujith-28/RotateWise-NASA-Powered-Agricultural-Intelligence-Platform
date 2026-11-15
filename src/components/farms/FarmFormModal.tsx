@@ -133,18 +133,18 @@ export function FarmFormModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[#17231E]/45 p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[#14251D]/40 p-4 backdrop-blur-[2px]"
       role="dialog"
       aria-modal="true"
       aria-labelledby="farm-modal-title"
     >
-      <div className="max-h-[90vh] w-full max-w-xl overflow-y-auto rounded-2xl border border-[#E1E8E2] bg-white p-6 shadow-xl">
-        <div className="flex items-center justify-between border-b border-[#E1E8E2] pb-4">
+      <div className="max-h-[90vh] w-full max-w-xl overflow-y-auto rounded-2xl border border-[#E7EBE7] bg-white p-6 shadow-xl">
+        <div className="flex items-center justify-between border-b border-[#E7EBE7] pb-4">
           <div>
-            <h2 id="farm-modal-title" className="font-display text-lg font-semibold text-[#17231E]">
+            <h2 id="farm-modal-title" className="font-display text-lg font-semibold tracking-[-0.015em] text-[#18231E]">
               {editingFarm ? 'Edit Farm Details' : 'Add New Farm'}
             </h2>
-            <p className="mt-0.5 text-xs text-[#65736B]">
+            <p className="mt-0.5 text-xs text-[#737D76]">
               Enter parcel boundaries, soil profile, irrigation, and active crop.
             </p>
           </div>
@@ -152,7 +152,7 @@ export function FarmFormModal({
             type="button"
             onClick={onClose}
             aria-label="Close farm dialog"
-            className="flex h-10 w-10 items-center justify-center rounded-lg text-[#65736B] hover:bg-[#F7F8F5]"
+            className="flex h-10 w-10 items-center justify-center rounded-xl text-[#737D76] transition-colors hover:bg-[#F7F8F6] hover:text-[#18231E]"
           >
             <X className="h-5 w-5" aria-hidden="true" />
           </button>
@@ -160,7 +160,7 @@ export function FarmFormModal({
 
         <form onSubmit={handleSubmit} className="mt-5 space-y-4" noValidate>
           <div>
-            <label htmlFor="farm-name" className="block text-xs font-medium text-[#17231E]">
+            <label htmlFor="farm-name" className="block text-xs font-medium text-[#18231E]">
               Farm Name
             </label>
             <input
@@ -169,13 +169,13 @@ export function FarmFormModal({
               value={form.name}
               onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
               placeholder="e.g., North Ridge Parcel"
-              className="mt-1.5 h-10 w-full rounded-lg border border-[#D4DDD6] bg-white px-3 text-sm text-[#17231E] focus:border-[#174C3C] focus:outline-none"
+              className="mt-1.5 h-10 w-full rounded-xl border border-[#E7EBE7] bg-white px-3.5 text-sm text-[#18231E] focus:border-[#174C3C] focus:outline-none"
             />
             {errors.name && <p className="mt-1 text-xs text-[#B91C1C]">{errors.name}</p>}
           </div>
 
           <div>
-            <label htmlFor="farm-location" className="block text-xs font-medium text-[#17231E]">
+            <label htmlFor="farm-location" className="block text-xs font-medium text-[#18231E]">
               Location (City, County, State/Region)
             </label>
             <input
@@ -184,14 +184,14 @@ export function FarmFormModal({
               value={form.location}
               onChange={(e) => setForm((f) => ({ ...f, location: e.target.value }))}
               placeholder="e.g., Boone, Story County, IA"
-              className="mt-1.5 h-10 w-full rounded-lg border border-[#D4DDD6] bg-white px-3 text-sm text-[#17231E] focus:border-[#174C3C] focus:outline-none"
+              className="mt-1.5 h-10 w-full rounded-xl border border-[#E7EBE7] bg-white px-3.5 text-sm text-[#18231E] focus:border-[#174C3C] focus:outline-none"
             />
             {errors.location && <p className="mt-1 text-xs text-[#B91C1C]">{errors.location}</p>}
           </div>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <label htmlFor="farm-lat" className="block text-xs font-medium text-[#17231E]">
+              <label htmlFor="farm-lat" className="block text-xs font-medium text-[#18231E]">
                 Latitude
               </label>
               <input
@@ -201,12 +201,12 @@ export function FarmFormModal({
                 value={form.lat}
                 onChange={(e) => setForm((f) => ({ ...f, lat: e.target.value }))}
                 placeholder="42.0308"
-                className="mt-1.5 h-10 w-full rounded-lg border border-[#D4DDD6] bg-white px-3 font-mono text-sm tabular-nums text-[#17231E] focus:border-[#174C3C] focus:outline-none"
+                className="mt-1.5 h-10 w-full rounded-xl border border-[#E7EBE7] bg-white px-3.5 font-mono text-sm tabular-nums text-[#18231E] focus:border-[#174C3C] focus:outline-none"
               />
               {errors.lat && <p className="mt-1 text-xs text-[#B91C1C]">{errors.lat}</p>}
             </div>
             <div>
-              <label htmlFor="farm-lng" className="block text-xs font-medium text-[#17231E]">
+              <label htmlFor="farm-lng" className="block text-xs font-medium text-[#18231E]">
                 Longitude
               </label>
               <input
@@ -216,7 +216,7 @@ export function FarmFormModal({
                 value={form.lng}
                 onChange={(e) => setForm((f) => ({ ...f, lng: e.target.value }))}
                 placeholder="-93.6319"
-                className="mt-1.5 h-10 w-full rounded-lg border border-[#D4DDD6] bg-white px-3 font-mono text-sm tabular-nums text-[#17231E] focus:border-[#174C3C] focus:outline-none"
+                className="mt-1.5 h-10 w-full rounded-xl border border-[#E7EBE7] bg-white px-3.5 font-mono text-sm tabular-nums text-[#18231E] focus:border-[#174C3C] focus:outline-none"
               />
               {errors.lng && <p className="mt-1 text-xs text-[#B91C1C]">{errors.lng}</p>}
             </div>
@@ -224,7 +224,7 @@ export function FarmFormModal({
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <label htmlFor="farm-area" className="block text-xs font-medium text-[#17231E]">
+              <label htmlFor="farm-area" className="block text-xs font-medium text-[#18231E]">
                 Land Area ({unitSystem === 'metric' ? 'Hectares' : 'Acres'})
               </label>
               <input
@@ -234,20 +234,20 @@ export function FarmFormModal({
                 value={form.landArea}
                 onChange={(e) => setForm((f) => ({ ...f, landArea: e.target.value }))}
                 placeholder="240"
-                className="mt-1.5 h-10 w-full rounded-lg border border-[#D4DDD6] bg-white px-3 font-mono text-sm tabular-nums text-[#17231E] focus:border-[#174C3C] focus:outline-none"
+                className="mt-1.5 h-10 w-full rounded-xl border border-[#E7EBE7] bg-white px-3.5 font-mono text-sm tabular-nums text-[#18231E] focus:border-[#174C3C] focus:outline-none"
               />
               {errors.landArea && <p className="mt-1 text-xs text-[#B91C1C]">{errors.landArea}</p>}
             </div>
 
             <div>
-              <label htmlFor="farm-soil" className="block text-xs font-medium text-[#17231E]">
+              <label htmlFor="farm-soil" className="block text-xs font-medium text-[#18231E]">
                 Soil Type
               </label>
               <select
                 id="farm-soil"
                 value={form.soilType}
                 onChange={(e) => setForm((f) => ({ ...f, soilType: e.target.value as SoilType }))}
-                className="mt-1.5 h-10 w-full rounded-lg border border-[#D4DDD6] bg-white px-3 text-sm text-[#17231E] focus:border-[#174C3C] focus:outline-none"
+                className="mt-1.5 h-10 w-full rounded-xl border border-[#E7EBE7] bg-white px-3 text-sm text-[#18231E] focus:border-[#174C3C] focus:outline-none"
               >
                 {SOIL_TYPES.map((soil) => (
                   <option key={soil} value={soil}>
@@ -259,7 +259,7 @@ export function FarmFormModal({
           </div>
 
           <div>
-            <label htmlFor="farm-ph" className="block text-xs font-medium text-[#17231E]">
+            <label htmlFor="farm-ph" className="block text-xs font-medium text-[#18231E]">
               Topsoil pH (3.5–9.5)
             </label>
             <input
@@ -271,14 +271,14 @@ export function FarmFormModal({
               value={form.phLevel ?? ''}
               onChange={(e) => setForm((f) => ({ ...f, phLevel: e.target.value }))}
               placeholder="6.5"
-              className="mt-1.5 h-10 w-full rounded-lg border border-[#D4DDD6] bg-white px-3 font-mono text-sm tabular-nums text-[#17231E] focus:border-[#174C3C] focus:outline-none sm:w-48"
+              className="mt-1.5 h-10 w-full rounded-xl border border-[#E7EBE7] bg-white px-3.5 font-mono text-sm tabular-nums text-[#18231E] focus:border-[#174C3C] focus:outline-none sm:w-48"
             />
             {errors.phLevel && <p className="mt-1 text-xs text-[#B91C1C]">{errors.phLevel}</p>}
           </div>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <label htmlFor="farm-irrigation" className="block text-xs font-medium text-[#17231E]">
+              <label htmlFor="farm-irrigation" className="block text-xs font-medium text-[#18231E]">
                 Irrigation Availability
               </label>
               <select
@@ -287,7 +287,7 @@ export function FarmFormModal({
                 onChange={(e) =>
                   setForm((f) => ({ ...f, irrigation: e.target.value as IrrigationType }))
                 }
-                className="mt-1.5 h-10 w-full rounded-lg border border-[#D4DDD6] bg-white px-3 text-sm text-[#17231E] focus:border-[#174C3C] focus:outline-none"
+                className="mt-1.5 h-10 w-full rounded-xl border border-[#E7EBE7] bg-white px-3 text-sm text-[#18231E] focus:border-[#174C3C] focus:outline-none"
               >
                 {IRRIGATION_OPTIONS.map((irr) => (
                   <option key={irr} value={irr}>
@@ -298,14 +298,14 @@ export function FarmFormModal({
             </div>
 
             <div>
-              <label htmlFor="farm-crop" className="block text-xs font-medium text-[#17231E]">
+              <label htmlFor="farm-crop" className="block text-xs font-medium text-[#18231E]">
                 Current Crop
               </label>
               <select
                 id="farm-crop"
                 value={form.currentCropId}
                 onChange={(e) => setForm((f) => ({ ...f, currentCropId: e.target.value }))}
-                className="mt-1.5 h-10 w-full rounded-lg border border-[#D4DDD6] bg-white px-3 text-sm text-[#17231E] focus:border-[#174C3C] focus:outline-none"
+                className="mt-1.5 h-10 w-full rounded-xl border border-[#E7EBE7] bg-white px-3 text-sm text-[#18231E] focus:border-[#174C3C] focus:outline-none"
               >
                 {cropCatalog.map((crop) => (
                   <option key={crop.id} value={crop.id}>
@@ -319,17 +319,17 @@ export function FarmFormModal({
             </div>
           </div>
 
-          <div className="flex items-center justify-end gap-3 border-t border-[#E1E8E2] pt-4">
+          <div className="flex items-center justify-end gap-3 border-t border-[#E7EBE7] pt-4">
             <button
               type="button"
               onClick={onClose}
-              className="h-10 rounded-lg border border-[#D4DDD6] bg-white px-4 text-sm font-medium text-[#17231E] hover:bg-[#F7F8F5]"
+              className="h-10 rounded-xl border border-[#E7EBE7] bg-white px-4 text-sm font-medium text-[#18231E] transition-colors hover:bg-[#F7F8F6]"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="h-10 rounded-lg bg-[#174C3C] px-5 text-sm font-medium text-white hover:bg-[#113A2E]"
+              className="h-10 rounded-xl bg-[#174C3C] px-5 text-sm font-medium text-white shadow-[0_1px_2px_rgba(20,37,29,0.12)] transition-colors hover:bg-[#133F32]"
             >
               {editingFarm ? 'Save Changes' : 'Add Farm'}
             </button>

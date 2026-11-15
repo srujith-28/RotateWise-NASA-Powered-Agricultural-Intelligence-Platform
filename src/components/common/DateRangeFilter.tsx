@@ -34,7 +34,7 @@ export function DateRangeFilter({ value, onChange }: DateRangeFilterProps) {
       role="group"
       aria-label="Climate chart date range filter"
     >
-      <div className="flex flex-wrap items-center gap-1 rounded-lg bg-[#EAE8E0] p-1">
+      <div className="flex flex-wrap items-center gap-1 rounded-xl bg-[#EEF1EE] p-1">
         {PRESETS.map((p) => {
           const active = value.preset === p.id;
           return (
@@ -43,10 +43,10 @@ export function DateRangeFilter({ value, onChange }: DateRangeFilterProps) {
               type="button"
               onClick={() => selectPreset(p.id)}
               aria-pressed={active}
-              className={`rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors whitespace-nowrap ${
+              className={`rounded-lg px-2.5 py-1.5 text-xs font-medium transition-all whitespace-nowrap ${
                 active
-                  ? 'bg-white text-[#14221A] shadow-sm'
-                  : 'text-[#4B5B51] hover:text-[#14221A]'
+                  ? 'bg-white text-[#18231E] shadow-[0_1px_2px_rgba(20,37,29,0.08)]'
+                  : 'text-[#737D76] hover:text-[#18231E]'
               }`}
             >
               {p.label}
@@ -55,8 +55,8 @@ export function DateRangeFilter({ value, onChange }: DateRangeFilterProps) {
         })}
       </div>
 
-      <div className="flex flex-wrap items-center gap-2 text-xs text-[#4B5B51]">
-        <Calendar className="h-3.5 w-3.5 text-[#2E8B57]" aria-hidden="true" />
+      <div className="flex flex-wrap items-center gap-2 text-xs text-[#737D76]">
+        <Calendar className="h-3.5 w-3.5 text-[#287A5A]" aria-hidden="true" />
         <label htmlFor="climate-start-month" className="sr-only">
           Start month
         </label>
@@ -72,7 +72,7 @@ export function DateRangeFilter({ value, onChange }: DateRangeFilterProps) {
               endMonthIndex: Math.max(nextStart, value.endMonthIndex),
             });
           }}
-          className="h-8 rounded-md border border-[#D8D5CB] bg-white px-2 text-xs font-medium text-[#14221A] focus:border-[#154734] focus:outline-none"
+          className="h-8 rounded-lg border border-[#E7EBE7] bg-white px-2 text-xs font-medium text-[#18231E] focus:border-[#174C3C] focus:outline-none"
         >
           {MONTH_LABELS.map((m, idx) => (
             <option key={m} value={idx}>
@@ -98,7 +98,7 @@ export function DateRangeFilter({ value, onChange }: DateRangeFilterProps) {
               endMonthIndex: nextEnd,
             });
           }}
-          className="h-8 rounded-md border border-[#D8D5CB] bg-white px-2 text-xs font-medium text-[#14221A] focus:border-[#154734] focus:outline-none"
+          className="h-8 rounded-lg border border-[#E7EBE7] bg-white px-2 text-xs font-medium text-[#18231E] focus:border-[#174C3C] focus:outline-none"
         >
           {MONTH_LABELS.map((m, idx) => (
             <option key={m} value={idx}>
@@ -107,7 +107,7 @@ export function DateRangeFilter({ value, onChange }: DateRangeFilterProps) {
           ))}
         </select>
 
-        <span className="font-mono text-[11px] text-[#6B7970]">
+        <span className="font-mono text-[11px] text-[#737D76]">
           ({formatRangeLabel(value)})
         </span>
       </div>

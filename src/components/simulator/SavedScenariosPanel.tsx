@@ -44,7 +44,7 @@ interface SavedScenariosPanelProps {
   onToggleCompareScenario: (scenarioId: string) => void;
 }
 
-const COMPARE_COLORS = ['#154734', '#2E8B57', '#C27803'];
+const COMPARE_COLORS = ['#174C3C', '#287A5A', '#B45309'];
 
 export function SavedScenariosPanel({
   farm,
@@ -81,22 +81,22 @@ export function SavedScenariosPanel({
   return (
     <section
       aria-label="Saved scenarios and multi-scenario comparison"
-      className="rounded-xl border border-[#E4E2DA] bg-white p-5 shadow-[0_1px_2px_rgba(18,43,29,0.03)]"
+      className="rounded-2xl border border-[#E7EBE7] bg-white p-5 sm:p-6"
     >
-      <div className="flex flex-col gap-2 border-b border-[#ECEAE3] pb-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-2 border-b border-[#E7EBE7] pb-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h2 className="flex items-center gap-2 font-display text-lg font-bold text-[#14221A]">
-            <Layers className="h-4 w-4 text-[#154734]" aria-hidden="true" />
+          <h2 className="flex items-center gap-2 font-display text-lg font-semibold tracking-[-0.015em] text-[#18231E]">
+            <Layers className="h-4 w-4 text-[#174C3C]" aria-hidden="true" />
             <span>Saved Scenarios &amp; Side-by-Side Comparison ({entries.length}/{MAX_COMPARISON_SCENARIOS})</span>
           </h2>
-          <p className="mt-0.5 text-xs text-[#6B7970]">
+          <p className="mt-0.5 text-xs text-[#737D76]">
             Load, rename, duplicate, delete, or compare up to {MAX_COMPARISON_SCENARIOS} hypothetical scenarios for {farm.name}.
           </p>
         </div>
       </div>
 
       {/* Saved Scenarios List */}
-      <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
+      <div className="mt-4 grid grid-cols-1 gap-3.5 md:grid-cols-2 xl:grid-cols-3">
         {scenarios.map((scen) => {
           const isLoaded = activeScenarioId === scen.id;
           const compIdx = comparedScenarioIds.indexOf(scen.id);
@@ -107,10 +107,10 @@ export function SavedScenariosPanel({
           return (
             <div
               key={scen.id}
-              className={`flex flex-col justify-between rounded-lg border p-3.5 transition-colors ${
+              className={`flex flex-col justify-between rounded-xl p-4 transition-colors ${
                 isLoaded
-                  ? 'border-[#154734] bg-[#F5FAF7]'
-                  : 'border-[#E4E2DA] bg-[#FAFAF7]'
+                  ? 'bg-[#EAF2EC] ring-1 ring-[#174C3C]/30'
+                  : 'bg-[#F7F8F6]'
               }`}
             >
               <div>
@@ -124,19 +124,19 @@ export function SavedScenariosPanel({
                       type="text"
                       value={renameDraft}
                       onChange={(e) => setRenameDraft(e.target.value)}
-                      className="h-8 min-w-0 flex-1 rounded border border-[#154734] bg-white px-2 text-xs text-[#14221A]"
+                      className="h-8 min-w-0 flex-1 rounded-lg border border-[#174C3C] bg-white px-2.5 text-xs text-[#18231E]"
                     />
                     <button
                       type="submit"
                       aria-label="Confirm scenario rename"
-                      className="h-8 rounded bg-[#154734] px-2.5 text-xs font-semibold text-white"
+                      className="h-8 rounded-lg bg-[#174C3C] px-2.5 text-xs font-semibold text-white"
                     >
                       Save
                     </button>
                     <button
                       type="button"
                       onClick={() => setRenamingId(null)}
-                      className="h-8 rounded border border-[#D8D5CB] bg-white px-2 text-xs text-[#4B5B51]"
+                      className="h-8 rounded-lg border border-[#E7EBE7] bg-white px-2 text-xs text-[#737D76]"
                     >
                       Cancel
                     </button>
@@ -146,34 +146,34 @@ export function SavedScenariosPanel({
                     <button
                       type="button"
                       onClick={() => onLoadScenario(scen)}
-                      className="text-left text-xs font-bold text-[#14221A] hover:text-[#154734] hover:underline"
+                      className="text-left text-xs font-semibold text-[#18231E] hover:text-[#174C3C] hover:underline"
                     >
                       {scen.name}
                     </button>
                     {isLoaded && (
-                      <span className="shrink-0 text-[10px] font-bold uppercase tracking-wide text-[#154734]">
+                      <span className="shrink-0 text-[11px] font-semibold text-[#174C3C]">
                         Loaded
                       </span>
                     )}
                   </div>
                 )}
 
-                <p className="mt-1 font-mono text-[11px] tabular-nums text-[#4B5B51]">
+                <p className="mt-1.5 font-mono text-[11px] tabular-nums text-[#4B5B51]">
                   Rain: {scen.config.rainfallDeltaPct >= 0 ? `+${scen.config.rainfallDeltaPct}` : scen.config.rainfallDeltaPct}% · Temp:{' '}
                   {scen.config.temperatureShiftC >= 0 ? `+${scen.config.temperatureShiftC}` : scen.config.temperatureShiftC}°C
                 </p>
-                <p className="text-[11px] text-[#65736B]">
+                <p className="text-[11px] text-[#737D76]">
                   {IRRIGATION_MODE_LABELS[scen.config.irrigationMode]} · Crop:{' '}
                   {CROP_KNOWLEDGE_DATABASE.find((c) => c.id === scen.config.primaryCropId)?.name ??
                     scen.config.primaryCropId.replace(/_/g, ' ')}
                 </p>
               </div>
 
-              <div className="mt-3 flex flex-wrap items-center gap-1.5 border-t border-[#ECEAE3] pt-2.5">
+              <div className="mt-3.5 flex flex-wrap items-center gap-1.5 border-t border-black/8 pt-3">
                 <button
                   type="button"
                   onClick={() => onLoadScenario(scen)}
-                  className="inline-flex h-7 items-center rounded border border-[#D8D5CB] bg-white px-2 text-[11px] font-medium text-[#14221A] hover:bg-[#F2F6F3]"
+                  className="inline-flex h-8 items-center rounded-lg border border-[#E7EBE7] bg-white px-2.5 text-[11px] font-medium text-[#18231E] hover:bg-[#EAF2EC]"
                 >
                   Load
                 </button>
@@ -181,10 +181,10 @@ export function SavedScenariosPanel({
                   type="button"
                   disabled={disableAddCompare}
                   onClick={() => onToggleCompareScenario(scen.id)}
-                  className={`inline-flex h-7 items-center gap-1 rounded border px-2 text-[11px] font-medium ${
+                  className={`inline-flex h-8 items-center gap-1 rounded-lg px-2.5 text-[11px] font-medium transition-colors ${
                     isCompared
-                      ? 'border-[#154734] bg-[#154734] text-white'
-                      : 'border-[#D8D5CB] bg-white text-[#14221A] hover:bg-[#F2F6F3] disabled:opacity-45'
+                      ? 'bg-[#174C3C] text-white'
+                      : 'border border-[#E7EBE7] bg-white text-[#18231E] hover:bg-[#EAF2EC] disabled:opacity-45'
                   }`}
                 >
                   <GitCompareArrows className="h-3 w-3" aria-hidden="true" />
@@ -197,26 +197,26 @@ export function SavedScenariosPanel({
                     setRenameDraft(scen.name);
                   }}
                   aria-label={`Rename ${scen.name}`}
-                  className="inline-flex h-7 w-7 items-center justify-center rounded border border-[#D8D5CB] bg-white text-[#4B5B51] hover:bg-[#F6F5F0]"
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[#E7EBE7] bg-white text-[#737D76] hover:bg-white hover:text-[#18231E]"
                 >
-                  <Edit3 className="h-3 w-3" aria-hidden="true" />
+                  <Edit3 className="h-3.5 w-3.5" aria-hidden="true" />
                 </button>
                 <button
                   type="button"
                   onClick={() => onDuplicateScenario(scen.id)}
                   aria-label={`Duplicate ${scen.name}`}
-                  className="inline-flex h-7 w-7 items-center justify-center rounded border border-[#D8D5CB] bg-white text-[#4B5B51] hover:bg-[#F6F5F0]"
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[#E7EBE7] bg-white text-[#737D76] hover:bg-white hover:text-[#18231E]"
                 >
-                  <Copy className="h-3 w-3" aria-hidden="true" />
+                  <Copy className="h-3.5 w-3.5" aria-hidden="true" />
                 </button>
                 {scenarios.length > 1 && (
                   <button
                     type="button"
                     onClick={() => onDeleteScenario(scen.id)}
                     aria-label={`Delete ${scen.name}`}
-                    className="inline-flex h-7 w-7 items-center justify-center rounded border border-[#E5C5C5] bg-white text-[#B91C1C] hover:bg-[#FEF2F2]"
+                    className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[#EBD2D2] bg-white text-[#B91C1C] hover:bg-[#FEF2F2]"
                   >
-                    <Trash2 className="h-3 w-3" aria-hidden="true" />
+                    <Trash2 className="h-3.5 w-3.5" aria-hidden="true" />
                   </button>
                 )}
               </div>
@@ -227,9 +227,9 @@ export function SavedScenariosPanel({
 
       {/* Multi-Scenario Comparison Chart & Table */}
       {entries.length > 0 && (
-        <div className="mt-6 space-y-5 border-t border-[#ECEAE3] pt-5">
+        <div className="mt-6 space-y-5 border-t border-[#E7EBE7] pt-5">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs font-semibold text-[#14221A]">
+            <span className="text-xs font-semibold text-[#18231E]">
               Comparing ({entries.length}/{MAX_COMPARISON_SCENARIOS}):
             </span>
             {entries.map((entry, idx) => (
@@ -237,7 +237,7 @@ export function SavedScenariosPanel({
                 key={entry.scenario.id}
                 type="button"
                 onClick={() => onToggleCompareScenario(entry.scenario.id)}
-                className="inline-flex h-7 items-center gap-1.5 rounded-md border border-[#D8D5CB] bg-[#FAFAF7] px-2.5 text-xs font-medium text-[#14221A] hover:bg-[#FEE2E2]"
+                className="inline-flex h-8 items-center gap-1.5 rounded-lg bg-[#F7F8F6] px-2.5 text-xs font-medium text-[#18231E] transition-colors hover:bg-[#FEE2E2]"
               >
                 <span
                   className="h-2 w-2 rounded-full"
@@ -247,7 +247,7 @@ export function SavedScenariosPanel({
                   aria-hidden="true"
                 />
                 <span>{entry.scenario.name}</span>
-                <X className="h-3 w-3 text-[#6B7970]" aria-hidden="true" />
+                <X className="h-3 w-3 text-[#737D76]" aria-hidden="true" />
               </button>
             ))}
           </div>
@@ -257,12 +257,12 @@ export function SavedScenariosPanel({
               <div className="h-64 w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={chartData} margin={{ top: 10, right: 12, left: -12, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#ECEAE3" vertical={false} />
-                    <XAxis dataKey="metric" tick={{ fontSize: 11, fill: '#5F6E65' }} axisLine={false} tickLine={false} />
-                    <YAxis domain={[0, 100]} tick={{ fontSize: 11, fill: '#5F6E65' }} axisLine={false} tickLine={false} />
+                    <CartesianGrid stroke="#EEF1EE" vertical={false} />
+                    <XAxis dataKey="metric" tick={{ fontSize: 11, fill: '#737D76' }} axisLine={false} tickLine={false} />
+                    <YAxis domain={[0, 100]} tick={{ fontSize: 11, fill: '#737D76' }} axisLine={false} tickLine={false} />
                     <Tooltip
                       formatter={(val) => [`${val ?? 0}/100`]}
-                      contentStyle={{ borderRadius: '10px', border: '1px solid #E4E2DA', fontSize: '12px' }}
+                      contentStyle={{ borderRadius: '12px', border: '1px solid #E7EBE7', fontSize: '12px' }}
                     />
                     <Legend wrapperStyle={{ fontSize: '12px' }} />
                     {entries.map((entry, idx) => (
@@ -279,35 +279,35 @@ export function SavedScenariosPanel({
                 </ResponsiveContainer>
               </div>
 
-              <div className="overflow-x-auto rounded-lg border border-[#ECEAE3]">
+              <div className="overflow-x-auto rounded-xl border border-[#E7EBE7]">
                 <table className="w-full border-collapse text-left text-xs">
                   <thead>
-                    <tr className="border-b border-[#ECEAE3] bg-[#FAFAF7] text-[#6B7970]">
+                    <tr className="border-b border-[#E7EBE7] bg-[#F7F8F6] text-[#737D76]">
                       <th className="min-w-[155px] px-4 py-3 font-medium">Scenario Attribute</th>
                       {entries.map((e) => (
-                        <th key={e.scenario.id} className="min-w-[190px] px-4 py-3 font-semibold text-[#14221A]">
+                        <th key={e.scenario.id} className="min-w-[190px] px-4 py-3 font-semibold text-[#18231E]">
                           {e.scenario.name}
                         </th>
                       ))}
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#ECEAE3]">
+                  <tbody className="divide-y divide-[#E7EBE7]">
                     <tr>
-                      <td className="px-4 py-2.5 font-medium text-[#4B5B51]">Perturbations</td>
+                      <td className="px-4 py-2.5 font-medium text-[#737D76]">Perturbations</td>
                       {entries.map((e) => (
-                        <td key={e.scenario.id} className="px-4 py-2.5 font-mono tabular-nums text-[#14221A]">
+                        <td key={e.scenario.id} className="px-4 py-2.5 font-mono tabular-nums text-[#18231E]">
                           Rain {e.scenario.config.rainfallDeltaPct >= 0 ? `+${e.scenario.config.rainfallDeltaPct}` : e.scenario.config.rainfallDeltaPct}% · Temp{' '}
                           {e.scenario.config.temperatureShiftC >= 0 ? `+${e.scenario.config.temperatureShiftC}` : e.scenario.config.temperatureShiftC}°C
-                          <span className="block font-sans text-[11px] text-[#6B7970]">
+                          <span className="block font-sans text-[11px] text-[#737D76]">
                             {IRRIGATION_MODE_LABELS[e.scenario.config.irrigationMode]}
                           </span>
                         </td>
                       ))}
                     </tr>
                     <tr>
-                      <td className="px-4 py-2.5 font-medium text-[#4B5B51]">Simulated Mean Temp &amp; Rain</td>
+                      <td className="px-4 py-2.5 font-medium text-[#737D76]">Simulated Mean Temp &amp; Rain</td>
                       {entries.map((e) => (
-                        <td key={e.scenario.id} className="px-4 py-2.5 font-mono tabular-nums text-[#14221A]">
+                        <td key={e.scenario.id} className="px-4 py-2.5 font-mono tabular-nums text-[#18231E]">
                           {e.result.simulatedClimate
                             ? `${formatTemp(e.result.simulatedClimate.meanTempC, unitSystem)} · ${formatRainfall(e.result.simulatedClimate.totalRainfallMm, unitSystem)}`
                             : 'Unavailable'}
@@ -315,17 +315,17 @@ export function SavedScenariosPanel({
                       ))}
                     </tr>
                     <tr>
-                      <td className="px-4 py-2.5 font-medium text-[#4B5B51]">Primary Crop Suitability</td>
+                      <td className="px-4 py-2.5 font-medium text-[#737D76]">Primary Crop Suitability</td>
                       {entries.map((e) => {
                         const baseScore = e.result.primaryBaselineEval?.overallScore ?? 0;
                         const simScore = e.result.primarySimulatedEval?.overallScore ?? 0;
                         const delta = simScore - baseScore;
                         return (
-                          <td key={e.scenario.id} className="px-4 py-2.5 text-[#14221A]">
-                            <span className="font-mono font-bold tabular-nums text-[#154734]">
+                          <td key={e.scenario.id} className="px-4 py-2.5 text-[#18231E]">
+                            <span className="font-mono font-bold tabular-nums text-[#174C3C]">
                               {e.result.primarySimulatedEval?.crop.name}: {simScore}/100
                             </span>
-                            <span className="block font-mono text-[11px] text-[#6B7970]">
+                            <span className="block font-mono text-[11px] text-[#737D76]">
                               Baseline {baseScore} ({delta >= 0 ? `+${delta}` : delta} pts)
                             </span>
                           </td>
@@ -333,9 +333,9 @@ export function SavedScenariosPanel({
                       })}
                     </tr>
                     <tr>
-                      <td className="px-4 py-2.5 font-medium text-[#4B5B51]">Peak Risk Level</td>
+                      <td className="px-4 py-2.5 font-medium text-[#737D76]">Peak Risk Level</td>
                       {entries.map((e) => (
-                        <td key={e.scenario.id} className="px-4 py-2.5 font-semibold text-[#14221A]">
+                        <td key={e.scenario.id} className="px-4 py-2.5 font-semibold text-[#18231E]">
                           {e.result.highestRiskLevel}
                         </td>
                       ))}
@@ -345,7 +345,7 @@ export function SavedScenariosPanel({
               </div>
             </>
           ) : (
-            <p className="text-xs text-[#92400E]">
+            <p className="text-xs text-[#9A5B00]">
               Retrieve NASA POWER baseline climate observations above to compare saved scenarios quantitatively.
             </p>
           )}

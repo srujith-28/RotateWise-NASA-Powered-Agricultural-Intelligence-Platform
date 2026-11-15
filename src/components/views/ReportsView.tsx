@@ -119,54 +119,54 @@ export function ReportsView({
         {reports.map((report) => (
           <article
             key={report.id}
-            className="rounded-xl border border-[#E4E2DA] bg-white p-5 shadow-[0_1px_2px_rgba(18,43,29,0.03)]"
+            className="rounded-2xl border border-[#E7EBE7] bg-white p-5 sm:p-6"
           >
             <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
               <div>
-                <div className="flex items-center gap-2 text-xs text-[#6B7970]">
-                  <FileText className="h-3.5 w-3.5 text-[#2E8B57]" aria-hidden="true" />
+                <div className="flex items-center gap-2 text-xs text-[#737D76]">
+                  <FileText className="h-3.5 w-3.5 text-[#174C3C]" aria-hidden="true" />
                   <span>{report.farmName}</span>
                   <span aria-hidden="true">·</span>
                   <span className="font-mono tabular-nums">{report.createdAt}</span>
                 </div>
-                <h2 className="mt-1 font-display text-base font-semibold text-[#14221A]">
+                <h2 className="mt-1.5 font-display text-base font-semibold tracking-[-0.015em] text-[#18231E]">
                   {report.title}
                 </h2>
-                <p className="mt-1.5 text-sm text-[#4B5B51]">{report.summary}</p>
+                <p className="mt-1.5 text-sm leading-relaxed text-[#737D76]">{report.summary}</p>
               </div>
 
               <button
                 type="button"
                 onClick={() => handleDownloadCsv(report)}
-                className="no-print inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg border border-[#D8D5CB] bg-white px-3 text-xs font-medium text-[#14221A] hover:bg-[#F6F5F0] whitespace-nowrap"
+                className="no-print inline-flex h-9 shrink-0 items-center gap-1.5 rounded-xl border border-[#E7EBE7] bg-white px-3.5 text-xs font-medium text-[#18231E] transition-colors hover:bg-[#F7F8F6] whitespace-nowrap"
               >
-                <Download className="h-3.5 w-3.5" aria-hidden="true" />
+                <Download className="h-3.5 w-3.5 text-[#174C3C]" aria-hidden="true" />
                 <span>Export CSV</span>
               </button>
             </div>
 
-            <dl className="mt-4 grid grid-cols-2 gap-4 border-t border-[#ECEAE3] pt-4 text-xs sm:grid-cols-4">
+            <dl className="mt-4 grid grid-cols-2 gap-4 border-t border-[#E7EBE7] pt-4 text-xs sm:grid-cols-4">
               <div>
-                <dt className="text-[#6B7970]">Rotation Efficiency</dt>
-                <dd className="mt-0.5 font-mono text-sm font-semibold tabular-nums text-[#154734]">
+                <dt className="text-[#737D76]">Rotation Efficiency</dt>
+                <dd className="mt-1 font-mono text-sm font-semibold tabular-nums text-[#174C3C]">
                   {report.rotationEfficiency}/100
                 </dd>
               </div>
               <div>
-                <dt className="text-[#6B7970]">Climate Suitability</dt>
-                <dd className="mt-0.5 font-mono text-sm font-semibold tabular-nums text-[#14221A]">
+                <dt className="text-[#737D76]">Climate Suitability</dt>
+                <dd className="mt-1 font-mono text-sm font-semibold tabular-nums text-[#18231E]">
                   {report.climateSuitability}/100
                 </dd>
               </div>
               <div>
-                <dt className="text-[#6B7970]">Soil Health</dt>
-                <dd className="mt-0.5 font-mono text-sm font-semibold tabular-nums text-[#14221A]">
+                <dt className="text-[#737D76]">Soil Health</dt>
+                <dd className="mt-1 font-mono text-sm font-semibold tabular-nums text-[#18231E]">
                   {report.soilHealthScore}/100
                 </dd>
               </div>
               <div>
-                <dt className="text-[#6B7970]">Top Next Crop</dt>
-                <dd className="mt-0.5 text-sm font-semibold text-[#14221A]">
+                <dt className="text-[#737D76]">Top Next Crop</dt>
+                <dd className="mt-1 text-sm font-semibold text-[#18231E]">
                   {report.recommendedCrop}
                 </dd>
               </div>

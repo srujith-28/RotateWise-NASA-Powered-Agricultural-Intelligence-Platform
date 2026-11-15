@@ -98,29 +98,29 @@ export function ScenarioControlsPanel({
   return (
     <section
       aria-label="Hypothetical climate scenario configuration"
-      className="rounded-xl border border-[#E4E2DA] bg-white p-5 shadow-[0_1px_2px_rgba(18,43,29,0.03)]"
+      className="rounded-2xl border border-[#E7EBE7] bg-white p-5"
     >
-      <div className="flex items-center justify-between gap-2 border-b border-[#ECEAE3] pb-3">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#E7EBE7] pb-3.5">
         <div className="flex items-center gap-2">
-          <SlidersHorizontal className="h-4 w-4 shrink-0 text-[#154734]" aria-hidden="true" />
-          <h2 className="font-display text-base font-bold text-[#14221A]">
+          <SlidersHorizontal className="h-4 w-4 shrink-0 text-[#174C3C]" aria-hidden="true" />
+          <h2 className="font-display text-sm font-semibold tracking-[-0.01em] text-[#18231E] whitespace-nowrap">
             Scenario Configuration
           </h2>
         </div>
         <button
           type="button"
           onClick={onRestoreBaseline}
-          className="inline-flex h-8 shrink-0 items-center gap-1 whitespace-nowrap rounded-md border border-[#D8D5CB] bg-[#FAFAF7] px-2.5 text-xs font-medium text-[#14221A] hover:bg-[#F2F6F3]"
+          className="inline-flex h-8 shrink-0 items-center gap-1 whitespace-nowrap rounded-lg border border-[#E7EBE7] bg-white px-2.5 text-xs font-medium text-[#18231E] transition-colors hover:bg-[#F7F8F6]"
         >
-          <RotateCcw className="h-3 w-3" aria-hidden="true" />
+          <RotateCcw className="h-3 w-3 text-[#737D76]" aria-hidden="true" />
           <span>Restore Baseline</span>
         </button>
       </div>
 
-      <div className="mt-3 flex items-start gap-2 rounded-lg border border-[#E4E2DA] bg-[#FBFBF9] p-2.5 text-[11px] text-[#4B5B51]">
-        <Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#154734]" aria-hidden="true" />
+      <div className="mt-3.5 flex items-start gap-2 rounded-xl bg-[#F7F8F6] p-3 text-xs text-[#737D76]">
+        <Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#174C3C]" aria-hidden="true" />
         <span>
-          <strong>Hypothetical Stress Test:</strong> Controls adjust historical NASA POWER observations mathematically and do not predict actual future weather.
+          <strong className="font-semibold text-[#18231E]">Hypothetical Stress Test:</strong> Controls adjust historical NASA POWER observations mathematically and do not predict actual future weather.
         </span>
       </div>
 
@@ -130,12 +130,12 @@ export function ScenarioControlsPanel({
           <div className="flex items-center justify-between text-xs">
             <label
               htmlFor="scenario-rainfall-slider"
-              className="flex items-center gap-1.5 font-semibold text-[#14221A]"
+              className="flex items-center gap-1.5 font-semibold text-[#18231E]"
             >
-              <CloudRain className="h-3.5 w-3.5 text-[#154734]" aria-hidden="true" />
+              <CloudRain className="h-3.5 w-3.5 text-[#174C3C]" aria-hidden="true" />
               <span>Rainfall Scenario</span>
             </label>
-            <span className="font-mono font-bold tabular-nums text-[#154734]">
+            <span className="font-mono font-bold tabular-nums text-[#174C3C]">
               {config.rainfallDeltaPct === 0
                 ? 'Normal (0%)'
                 : config.rainfallDeltaPct > 0
@@ -154,9 +154,9 @@ export function ScenarioControlsPanel({
             onChange={(e) =>
               onChangeConfig({ ...config, rainfallDeltaPct: Number(e.target.value) })
             }
-            className="mt-2 w-full accent-[#154734] disabled:opacity-50"
+            className="mt-2.5 w-full accent-[#174C3C] disabled:opacity-50"
           />
-          <div className="mt-2 flex flex-wrap gap-1">
+          <div className="mt-2 flex flex-wrap gap-1.5">
             {RAINFALL_ADJUSTMENT_OPTIONS.map((pct) => {
               const active = config.rainfallDeltaPct === pct;
               return (
@@ -165,10 +165,10 @@ export function ScenarioControlsPanel({
                   type="button"
                   disabled={disabled}
                   onClick={() => onChangeConfig({ ...config, rainfallDeltaPct: pct })}
-                  className={`rounded px-2 py-1 font-mono text-[11px] font-medium transition-colors ${
+                  className={`rounded-lg px-2 py-1 font-mono text-[11px] font-medium transition-colors ${
                     active
-                      ? 'bg-[#154734] text-white'
-                      : 'border border-[#E4E2DA] bg-[#FAFAF7] text-[#4B5B51] hover:bg-[#F2F6F3]'
+                      ? 'bg-[#174C3C] text-white'
+                      : 'bg-[#F7F8F6] text-[#737D76] hover:bg-[#EAF2EC] hover:text-[#18231E]'
                   }`}
                 >
                   {pct === 0 ? '0%' : pct > 0 ? `+${pct}%` : `${pct}%`}
@@ -183,12 +183,12 @@ export function ScenarioControlsPanel({
           <div className="flex items-center justify-between text-xs">
             <label
               htmlFor="scenario-temp-slider"
-              className="flex items-center gap-1.5 font-semibold text-[#14221A]"
+              className="flex items-center gap-1.5 font-semibold text-[#18231E]"
             >
-              <Thermometer className="h-3.5 w-3.5 text-[#154734]" aria-hidden="true" />
+              <Thermometer className="h-3.5 w-3.5 text-[#174C3C]" aria-hidden="true" />
               <span>Temperature Shift (°C)</span>
             </label>
-            <span className="font-mono font-bold tabular-nums text-[#154734]">
+            <span className="font-mono font-bold tabular-nums text-[#174C3C]">
               {config.temperatureShiftC === 0
                 ? 'Baseline (0°C)'
                 : config.temperatureShiftC > 0
@@ -207,9 +207,9 @@ export function ScenarioControlsPanel({
             onChange={(e) =>
               onChangeConfig({ ...config, temperatureShiftC: Number(e.target.value) })
             }
-            className="mt-2 w-full accent-[#154734] disabled:opacity-50"
+            className="mt-2.5 w-full accent-[#174C3C] disabled:opacity-50"
           />
-          <div className="mt-2 flex flex-wrap gap-1">
+          <div className="mt-2 flex flex-wrap gap-1.5">
             {TEMPERATURE_SHIFT_OPTIONS.map((deg) => {
               const active = config.temperatureShiftC === deg;
               return (
@@ -218,10 +218,10 @@ export function ScenarioControlsPanel({
                   type="button"
                   disabled={disabled}
                   onClick={() => onChangeConfig({ ...config, temperatureShiftC: deg })}
-                  className={`rounded px-2 py-1 font-mono text-[11px] font-medium transition-colors ${
+                  className={`rounded-lg px-2 py-1 font-mono text-[11px] font-medium transition-colors ${
                     active
-                      ? 'bg-[#154734] text-white'
-                      : 'border border-[#E4E2DA] bg-[#FAFAF7] text-[#4B5B51] hover:bg-[#F2F6F3]'
+                      ? 'bg-[#174C3C] text-white'
+                      : 'bg-[#F7F8F6] text-[#737D76] hover:bg-[#EAF2EC] hover:text-[#18231E]'
                   }`}
                 >
                   {deg === 0 ? '0°C' : deg > 0 ? `+${deg}°C` : `${deg}°C`}
@@ -233,14 +233,14 @@ export function ScenarioControlsPanel({
 
         {/* Water & Irrigation Controls */}
         <div>
-          <span className="flex items-center gap-1.5 text-xs font-semibold text-[#14221A]">
-            <Droplets className="h-3.5 w-3.5 text-[#154734]" aria-hidden="true" />
+          <span className="flex items-center gap-1.5 text-xs font-semibold text-[#18231E]">
+            <Droplets className="h-3.5 w-3.5 text-[#174C3C]" aria-hidden="true" />
             <span>Water &amp; Irrigation Strategy</span>
           </span>
-          <p className="mt-0.5 text-[11px] text-[#6B7970]">
-            Parcel baseline: <strong>{farm.irrigation}</strong>
+          <p className="mt-0.5 text-[11px] text-[#737D76]">
+            Parcel baseline: <strong className="text-[#18231E]">{farm.irrigation}</strong>
           </p>
-          <div className="mt-2 grid grid-cols-1 gap-1.5 sm:grid-cols-2">
+          <div className="mt-2.5 grid grid-cols-1 gap-2 sm:grid-cols-2">
             {IRRIGATION_MODES.map((mode) => {
               const active = config.irrigationMode === mode.id;
               return (
@@ -253,14 +253,14 @@ export function ScenarioControlsPanel({
                   }
                   aria-pressed={active}
                   title={IRRIGATION_MODE_LABELS[mode.id]}
-                  className={`rounded-lg border p-2.5 text-left transition-colors ${
+                  className={`rounded-xl border p-2.5 text-left transition-colors ${
                     active
-                      ? 'border-[#154734] bg-[#F2F8F4] text-[#154734]'
-                      : 'border-[#E4E2DA] bg-[#FAFAF7] text-[#14221A] hover:bg-white'
+                      ? 'border-[#174C3C] bg-[#EAF2EC] text-[#174C3C]'
+                      : 'border-[#E7EBE7] bg-[#F7F8F6] text-[#18231E] hover:bg-white'
                   }`}
                 >
                   <span className="block text-xs font-semibold">{mode.shortLabel}</span>
-                  <span className="block text-[11px] text-[#6B7970]">{mode.helper}</span>
+                  <span className="block text-[11px] text-[#737D76]">{mode.helper}</span>
                 </button>
               );
             })}
@@ -268,11 +268,11 @@ export function ScenarioControlsPanel({
         </div>
 
         {/* Crop Scenario Controls */}
-        <div className="space-y-3 border-t border-[#ECEAE3] pt-4">
+        <div className="space-y-3 border-t border-[#E7EBE7] pt-4">
           <div>
             <label
               htmlFor="scenario-primary-crop"
-              className="block text-xs font-semibold text-[#14221A]"
+              className="block text-xs font-semibold text-[#18231E]"
             >
               Primary Crop Evaluated
             </label>
@@ -290,7 +290,7 @@ export function ScenarioControlsPanel({
                     ),
                 });
               }}
-              className="mt-1.5 h-10 w-full rounded-lg border border-[#D8D5CB] bg-white px-3 text-sm font-medium text-[#14221A] focus:border-[#154734] focus:outline-none"
+              className="mt-1.5 h-10 w-full rounded-xl border border-[#E7EBE7] bg-white px-3 text-sm font-medium text-[#18231E] focus:border-[#174C3C] focus:outline-none"
             >
               {CROP_KNOWLEDGE_DATABASE.map((c) => (
                 <option key={c.id} value={c.id}>
@@ -302,7 +302,7 @@ export function ScenarioControlsPanel({
           </div>
 
           <div>
-            <span className="block text-xs font-semibold text-[#14221A]">
+            <span className="block text-xs font-semibold text-[#18231E]">
               Compare Alternative Crops Under Scenario (up to 4)
             </span>
             <div className="mt-2 flex flex-wrap gap-1.5">
@@ -318,10 +318,10 @@ export function ScenarioControlsPanel({
                     type="button"
                     disabled={maxReached}
                     onClick={() => handleToggleAltCrop(c.id)}
-                    className={`inline-flex h-7 items-center gap-1 rounded-md border px-2 text-[11px] font-medium transition-colors ${
+                    className={`inline-flex h-8 items-center gap-1 rounded-lg px-2.5 text-[11px] font-medium transition-colors ${
                       selected
-                        ? 'border-[#154734] bg-[#154734] text-white'
-                        : 'border-[#D8D5CB] bg-[#FAFAF7] text-[#4B5B51] hover:bg-white disabled:opacity-45'
+                        ? 'bg-[#174C3C] text-white'
+                        : 'bg-[#F7F8F6] text-[#737D76] hover:bg-[#EAF2EC] hover:text-[#18231E] disabled:opacity-45'
                     }`}
                   >
                     {selected && <Check className="h-3 w-3" aria-hidden="true" />}
@@ -336,11 +336,11 @@ export function ScenarioControlsPanel({
         {/* Save Current Scenario Form */}
         <form
           onSubmit={handleSaveSubmit}
-          className="space-y-2 border-t border-[#ECEAE3] pt-4"
+          className="space-y-2 border-t border-[#E7EBE7] pt-4"
         >
           <label
             htmlFor="save-scenario-name"
-            className="block text-xs font-semibold text-[#14221A]"
+            className="block text-xs font-semibold text-[#18231E]"
           >
             Save Scenario to {farm.name}
           </label>
@@ -351,11 +351,11 @@ export function ScenarioControlsPanel({
               value={scenarioNameDraft}
               onChange={(e) => setScenarioNameDraft(e.target.value)}
               placeholder="e.g. Severe Drought -40% +3°C"
-              className="h-9 min-w-0 flex-1 rounded-lg border border-[#D8D5CB] bg-[#FAFAF7] px-2.5 text-xs text-[#14221A] focus:border-[#154734] focus:outline-none"
+              className="h-9 min-w-0 flex-1 rounded-xl border border-[#E7EBE7] bg-[#F7F8F6] px-3 text-xs text-[#18231E] focus:border-[#174C3C] focus:bg-white focus:outline-none"
             />
             <button
               type="submit"
-              className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg bg-[#154734] px-3 text-xs font-semibold text-white hover:bg-[#0F3527]"
+              className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-xl bg-[#174C3C] px-3.5 text-xs font-semibold text-white transition-colors hover:bg-[#133F32]"
             >
               <Save className="h-3.5 w-3.5" aria-hidden="true" />
               <span>Save</span>

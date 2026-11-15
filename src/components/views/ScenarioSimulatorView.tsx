@@ -37,7 +37,6 @@ import type {
   FarmDecisionPreferences,
   SavedClimateScenario,
 } from '../../types/rotatewise';
-import { KpiCard } from '../common/KpiCard';
 import { EmptyState } from '../common/StateFeedback';
 import { SavedScenariosPanel } from '../simulator/SavedScenariosPanel';
 import { ScenarioComparisonCharts } from '../simulator/ScenarioComparisonCharts';
@@ -385,7 +384,7 @@ export function ScenarioSimulatorView({
         classification="scenario"
         metadata={
           <>
-            <span className="font-mono tabular-nums text-[#17231E]">
+            <span className="font-mono tabular-nums text-[#18231E]">
               {farm.coordinates.lat.toFixed(4)}°, {farm.coordinates.lng.toFixed(4)}°
             </span>
             <span aria-hidden="true">·</span>
@@ -405,7 +404,7 @@ export function ScenarioSimulatorView({
             <button
               type="button"
               onClick={() => onOpenEditFarm(farm)}
-              className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg border border-[#E1E8E2] bg-white px-3 text-xs font-medium text-[#17231E] hover:bg-[#F7F8F5] whitespace-nowrap"
+              className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-xl border border-[#E7EBE7] bg-white px-3.5 text-xs font-medium text-[#18231E] transition-colors hover:bg-[#F7F8F6] whitespace-nowrap"
             >
               <Edit3 className="h-3.5 w-3.5 text-[#174C3C]" aria-hidden="true" />
               <span>Edit Soil / Crop</span>
@@ -414,7 +413,7 @@ export function ScenarioSimulatorView({
               type="button"
               disabled={!isReady}
               onClick={handleSaveReport}
-              className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg bg-[#174C3C] px-3.5 text-xs font-semibold text-white hover:bg-[#113A2E] disabled:cursor-not-allowed disabled:opacity-50 whitespace-nowrap"
+              className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-xl bg-[#174C3C] px-4 text-xs font-semibold text-white shadow-[0_1px_2px_rgba(20,37,29,0.12)] transition-colors hover:bg-[#133F32] disabled:cursor-not-allowed disabled:opacity-50 whitespace-nowrap"
             >
               <FileDown className="h-3.5 w-3.5" aria-hidden="true" />
               <span>Save to Reports</span>
@@ -426,10 +425,10 @@ export function ScenarioSimulatorView({
       {/* 1. Historical NASA POWER Baseline Context */}
       <section
         aria-label="1. Historical NASA POWER baseline observations"
-        className="rounded-xl border border-[#E1E8E2] bg-white p-4"
+        className="rounded-2xl border border-[#E7EBE7] bg-white p-5 sm:p-6"
       >
-        <div className="mb-2 flex flex-wrap items-center gap-2">
-          <span className="font-mono text-[11px] font-semibold uppercase tracking-wider text-[#65736B]">
+        <div className="mb-3 flex flex-wrap items-center gap-2.5">
+          <span className="text-xs font-semibold text-[#18231E]">
             1. Historical NASA Baseline
           </span>
           <DataClassificationBadge
@@ -438,24 +437,24 @@ export function ScenarioSimulatorView({
         </div>
         <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
           <div className="flex items-start gap-2.5 text-xs">
-            <Satellite className="mt-0.5 h-4 w-4 shrink-0 text-[#154734]" aria-hidden="true" />
+            <Satellite className="mt-0.5 h-4 w-4 shrink-0 text-[#174C3C]" aria-hidden="true" />
             <div>
-              <p className="font-semibold text-[#14221A]">
+              <p className="font-semibold text-[#18231E]">
                 {nasaDataset
                   ? `Historical Baseline: NASA POWER (AG) · ${nasaDataset.classification} · ${nasaDataset.startDate} to ${nasaDataset.endDate}`
                   : nasaClimate.status === 'loading'
                     ? `Retrieving historical NASA POWER baseline for ${nasaClimate.appliedStartDate} to ${nasaClimate.appliedEndDate}...`
                     : `Historical Baseline Unavailable · Requested ${nasaClimate.appliedStartDate} to ${nasaClimate.appliedEndDate}`}
               </p>
-              <p className="mt-0.5 text-[#4B5B51]">
+              <p className="mt-0.5 text-[#737D76]">
                 {nasaDataset ? (
                   <>
                     Observed Mean{' '}
-                    <span className="font-mono font-semibold tabular-nums text-[#14221A]">
+                    <span className="font-mono font-semibold tabular-nums text-[#18231E]">
                       {formatTemp(nasaDataset.summary.meanTempC ?? 0, unitSystem)}
                     </span>{' '}
                     · Observed Rainfall{' '}
-                    <span className="font-mono font-semibold tabular-nums text-[#14221A]">
+                    <span className="font-mono font-semibold tabular-nums text-[#18231E]">
                       {formatRainfall(nasaDataset.summary.totalRainfallMm ?? 0, unitSystem)}
                     </span>{' '}
                     ({nasaDataset.summary.validDayCount} days) · Retrieved:{' '}
@@ -475,39 +474,41 @@ export function ScenarioSimulatorView({
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-1.5">
-            {(
-              [
-                { id: '30d', label: '30 Days' },
-                { id: '90d', label: '90 Days' },
-                { id: 'growing2026', label: '2026 Season' },
-                { id: 'season2025', label: '2025 Season' },
-              ] as const
-            ).map((btn) => {
-              const active = nasaClimate.preset === btn.id;
-              return (
-                <button
-                  key={btn.id}
-                  type="button"
-                  onClick={() => handleSelectBaselinePreset(btn.id)}
-                  className={`h-8 rounded-md px-2.5 text-xs font-medium transition-colors whitespace-nowrap ${
-                    active
-                      ? 'bg-[#154734] text-white'
-                      : 'border border-[#E4E2DA] bg-[#FAFAF7] text-[#4B5B51] hover:bg-[#F2F6F3] hover:text-[#14221A]'
-                  }`}
-                >
-                  {btn.label}
-                </button>
-              );
-            })}
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="inline-flex flex-wrap rounded-xl bg-[#EEF1EE] p-1">
+              {(
+                [
+                  { id: '30d', label: '30 Days' },
+                  { id: '90d', label: '90 Days' },
+                  { id: 'growing2026', label: '2026 Season' },
+                  { id: 'season2025', label: '2025 Season' },
+                ] as const
+              ).map((btn) => {
+                const active = nasaClimate.preset === btn.id;
+                return (
+                  <button
+                    key={btn.id}
+                    type="button"
+                    onClick={() => handleSelectBaselinePreset(btn.id)}
+                    className={`h-8 rounded-lg px-2.5 text-xs font-medium transition-colors whitespace-nowrap ${
+                      active
+                        ? 'bg-white font-semibold text-[#18231E] shadow-xs'
+                        : 'text-[#737D76] hover:text-[#18231E]'
+                    }`}
+                  >
+                    {btn.label}
+                  </button>
+                );
+              })}
+            </div>
             <button
               type="button"
               onClick={nasaClimate.refresh}
               aria-label="Refresh NASA POWER baseline observations"
-              className="inline-flex h-8 items-center gap-1.5 rounded-md border border-[#E4E2DA] bg-[#FAFAF7] px-2.5 text-xs font-medium text-[#4B5B51] hover:bg-[#F2F6F3] hover:text-[#14221A]"
+              className="inline-flex h-9 items-center gap-1.5 rounded-xl border border-[#E7EBE7] bg-white px-3 text-xs font-medium text-[#18231E] transition-colors hover:bg-[#F7F8F6]"
             >
               <RefreshCw
-                className={`h-3.5 w-3.5 ${nasaClimate.status === 'loading' ? 'animate-spin' : ''}`}
+                className={`h-3.5 w-3.5 text-[#174C3C] ${nasaClimate.status === 'loading' ? 'animate-spin' : ''}`}
                 aria-hidden="true"
               />
               <span>Refresh</span>
@@ -515,10 +516,10 @@ export function ScenarioSimulatorView({
           </div>
         </div>
 
-        <div className="mt-3 flex items-start gap-2 border-t border-[#ECEAE3] pt-3 text-[11px] text-[#4B5B51]">
-          <Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#154734]" aria-hidden="true" />
+        <div className="mt-3.5 flex items-start gap-2 border-t border-[#E7EBE7] pt-3 text-xs text-[#737D76]">
+          <Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#174C3C]" aria-hidden="true" />
           <span>
-            <strong>Hypothetical Simulation vs. Weather Forecast:</strong> Baseline metrics are real historical <strong>NASA POWER</strong> observations for {farm.name}. Simulated metrics represent deterministic counterfactual adjustments (never weather forecasts, yield guarantees, or market projections).
+            <strong className="font-semibold text-[#18231E]">Hypothetical Simulation vs. Weather Forecast:</strong> Baseline metrics are real historical <strong className="font-semibold text-[#18231E]">NASA POWER</strong> observations for {farm.name}. Simulated metrics represent deterministic counterfactual adjustments (never weather forecasts, yield guarantees, or market projections).
           </span>
         </div>
       </section>
@@ -526,7 +527,7 @@ export function ScenarioSimulatorView({
       {notice && (
         <div
           role="status"
-          className="rounded-xl border border-[#CFE4D6] bg-[#F2F8F4] px-4 py-2.5 text-xs font-medium text-[#154734]"
+          className="rounded-2xl bg-[#EAF2EC] px-4 py-3 text-xs font-medium text-[#174C3C]"
         >
           {notice}
         </div>
@@ -537,7 +538,7 @@ export function ScenarioSimulatorView({
         <div
           role="status"
           aria-label="Loading NASA POWER baseline observations"
-          className="flex items-center gap-2.5 rounded-xl border border-[#DCE5DF] bg-[#F2F6F3] px-4 py-3 text-xs font-medium text-[#154734]"
+          className="flex items-center gap-2.5 rounded-2xl border border-[#E7EBE7] bg-[#F7F8F6] px-4 py-3 text-xs font-medium text-[#174C3C]"
         >
           <RefreshCw className="h-4 w-4 animate-spin shrink-0" aria-hidden="true" />
           <span>
@@ -552,7 +553,7 @@ export function ScenarioSimulatorView({
         <section
           role="alert"
           aria-label="Missing NASA POWER baseline climate limitation"
-          className="rounded-xl border border-[#F2C6C6] bg-[#FEF2F2] p-4 text-xs text-[#991B1B]"
+          className="rounded-2xl border border-[#EBD2D2] bg-[#FEF2F2] p-4 text-xs text-[#991B1B]"
         >
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-start gap-2.5">
@@ -569,7 +570,7 @@ export function ScenarioSimulatorView({
             <button
               type="button"
               onClick={nasaClimate.refresh}
-              className="inline-flex h-8 shrink-0 items-center gap-1.5 rounded-lg border border-[#DC2626]/40 bg-white px-3 text-xs font-semibold text-[#991B1B] hover:bg-[#FEE2E2] whitespace-nowrap"
+              className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-xl border border-[#DC2626]/35 bg-white px-3.5 text-xs font-semibold text-[#991B1B] hover:bg-[#FEE2E2] whitespace-nowrap"
             >
               <RefreshCw className="h-3.5 w-3.5" aria-hidden="true" />
               <span>Retry NASA POWER</span>
@@ -578,63 +579,102 @@ export function ScenarioSimulatorView({
         </section>
       )}
 
-      {/* Baseline vs. Simulated Top KPI Summary */}
+      {/* Baseline vs. Simulated Open 4-Column Hairline Telemetry Strip */}
       {isReady && result.baselineClimate && result.simulatedClimate && baseEval && simEval && (
         <section
           aria-label="Baseline versus hypothetical scenario key indicators"
-          className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4"
+          className="grid grid-cols-1 divide-y divide-[#E7EBE7] rounded-2xl border border-[#E7EBE7] bg-white sm:grid-cols-2 sm:divide-y-0 xl:grid-cols-4 xl:divide-x"
         >
-          <KpiCard
-            label="Simulated Rainfall (Hypothetical)"
-            value={formatRainfall(result.simulatedClimate.totalRainfallMm, unitSystem)}
-            subtitle={`Baseline: ${formatRainfall(result.baselineClimate.totalRainfallMm, unitSystem)} (${config.rainfallDeltaPct >= 0 ? `+${config.rainfallDeltaPct}` : config.rainfallDeltaPct}%)`}
-            subtitleTone={config.rainfallDeltaPct <= -20 ? 'danger' : 'neutral'}
-            tooltip="Total rainfall across the selected NASA POWER window after applying your hypothetical rainfall percentage adjustment."
-          />
-          <KpiCard
-            label="Simulated Mean Temp (Hypothetical)"
-            value={formatTemp(result.simulatedClimate.meanTempC, unitSystem)}
-            subtitle={`Baseline: ${formatTemp(result.baselineClimate.meanTempC, unitSystem)} (${config.temperatureShiftC >= 0 ? `+${config.temperatureShiftC}` : config.temperatureShiftC}°C)`}
-            subtitleTone={config.temperatureShiftC >= 3 ? 'warning' : 'neutral'}
-            tooltip="Mean parcel temperature calculated by shifting the NASA POWER baseline temperature by your selected °C offset."
-          />
-          <KpiCard
-            label={`${simEval.crop.name} Suitability`}
-            value={String(simEval.overallScore)}
-            suffix="/100"
-            valueTone={
-              simEval.overallScore >= 75
-                ? 'primary'
-                : simEval.overallScore < 55
-                  ? 'danger'
-                  : 'default'
-            }
-            subtitle={`Baseline: ${baseEval.overallScore}/100 (${scoreDelta >= 0 ? `+${scoreDelta}` : scoreDelta} pts · ${simEval.suitabilityCategory})`}
-            subtitleTone={scoreDelta > 0 ? 'positive' : scoreDelta < 0 ? 'danger' : 'neutral'}
-            tooltip="Deterministic 0–100 suitability score computed by evaluateCropSuitability under simulated climate & irrigation parameters."
-          />
-          <KpiCard
-            label="Peak Scenario Risk"
-            value={result.highestRiskLevel}
-            valueTone={
-              result.highestRiskLevel === 'Critical' || result.highestRiskLevel === 'High'
-                ? 'danger'
-                : result.highestRiskLevel === 'Low'
-                  ? 'primary'
-                  : 'default'
-            }
-            subtitle={`Irrigation: ${result.simulatedClimate.effectiveIrrigation}`}
-            subtitleTone="neutral"
-            tooltip="Highest severity across deterministic rainfall, thermal, water shortage, soil, seasonal, and rotation conflict rules."
-          />
+          <div className="p-5 sm:border-b sm:border-r sm:border-[#E7EBE7] xl:border-b-0 xl:border-r-0">
+            <p className="text-xs font-medium text-[#737D76]">
+              Simulated Rainfall (Hypothetical)
+            </p>
+            <p className="mt-2 font-display text-2xl font-semibold tracking-[-0.02em] tabular-nums text-[#18231E]">
+              {formatRainfall(result.simulatedClimate.totalRainfallMm, unitSystem)}
+            </p>
+            <p
+              className={`mt-1 text-xs ${
+                config.rainfallDeltaPct <= -20 ? 'font-medium text-[#B91C1C]' : 'text-[#737D76]'
+              }`}
+            >
+              Baseline: {formatRainfall(result.baselineClimate.totalRainfallMm, unitSystem)} (
+              {config.rainfallDeltaPct >= 0 ? `+${config.rainfallDeltaPct}` : config.rainfallDeltaPct}%)
+            </p>
+          </div>
+
+          <div className="p-5 sm:border-b sm:border-[#E7EBE7] xl:border-b-0">
+            <p className="text-xs font-medium text-[#737D76]">
+              Simulated Mean Temp (Hypothetical)
+            </p>
+            <p className="mt-2 font-display text-2xl font-semibold tracking-[-0.02em] tabular-nums text-[#18231E]">
+              {formatTemp(result.simulatedClimate.meanTempC, unitSystem)}
+            </p>
+            <p
+              className={`mt-1 text-xs ${
+                config.temperatureShiftC >= 3 ? 'font-medium text-[#B45309]' : 'text-[#737D76]'
+              }`}
+            >
+              Baseline: {formatTemp(result.baselineClimate.meanTempC, unitSystem)} (
+              {config.temperatureShiftC >= 0 ? `+${config.temperatureShiftC}` : config.temperatureShiftC}°C)
+            </p>
+          </div>
+
+          <div className="p-5 sm:border-r sm:border-[#E7EBE7] xl:border-r-0">
+            <p className="text-xs font-medium text-[#737D76]">
+              {simEval.crop.name} Suitability
+            </p>
+            <p
+              className={`mt-2 font-display text-2xl font-semibold tracking-[-0.02em] tabular-nums ${
+                simEval.overallScore >= 75
+                  ? 'text-[#174C3C]'
+                  : simEval.overallScore < 55
+                    ? 'text-[#B91C1C]'
+                    : 'text-[#18231E]'
+              }`}
+            >
+              {simEval.overallScore}
+              <span className="ml-0.5 text-sm font-normal text-[#737D76]">/100</span>
+            </p>
+            <p
+              className={`mt-1 text-xs ${
+                scoreDelta > 0
+                  ? 'font-medium text-[#174C3C]'
+                  : scoreDelta < 0
+                    ? 'font-medium text-[#B91C1C]'
+                    : 'text-[#737D76]'
+              }`}
+            >
+              Baseline: {baseEval.overallScore}/100 ({scoreDelta >= 0 ? `+${scoreDelta}` : scoreDelta} pts · {simEval.suitabilityCategory})
+            </p>
+          </div>
+
+          <div className="p-5">
+            <p className="text-xs font-medium text-[#737D76]">
+              Peak Scenario Risk
+            </p>
+            <p
+              className={`mt-2 font-display text-2xl font-semibold tracking-[-0.02em] ${
+                result.highestRiskLevel === 'Critical' || result.highestRiskLevel === 'High'
+                  ? 'text-[#B91C1C]'
+                  : result.highestRiskLevel === 'Low'
+                    ? 'text-[#174C3C]'
+                    : 'text-[#B45309]'
+              }`}
+            >
+              {result.highestRiskLevel}
+            </p>
+            <p className="mt-1 text-xs text-[#737D76]">
+              Irrigation: {result.simulatedClimate.effectiveIrrigation}
+            </p>
+          </div>
         </section>
       )}
 
       {/* Main Split Workspace: 2. Hypothetical Assumptions (Left) + 3. Calculated Model Outputs (Right) */}
-      <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
-        <div className="min-w-0 space-y-2 lg:col-span-4">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
+        <div className="min-w-0 space-y-2.5 lg:col-span-4">
           <div className="flex items-center justify-between px-1">
-            <span className="font-mono text-[11px] font-semibold uppercase tracking-wider text-[#65736B]">
+            <span className="text-xs font-semibold text-[#18231E]">
               2. Hypothetical Scenario Assumptions
             </span>
             <DataClassificationBadge category="scenario" customLabel="Assumptions" />
@@ -649,9 +689,9 @@ export function ScenarioSimulatorView({
           />
         </div>
 
-        <div className="min-w-0 space-y-5 lg:col-span-8">
+        <div className="min-w-0 space-y-6 lg:col-span-8">
           <div className="flex flex-wrap items-center justify-between gap-2 px-1">
-            <span className="font-mono text-[11px] font-semibold uppercase tracking-wider text-[#65736B]">
+            <span className="text-xs font-semibold text-[#18231E]">
               3. Calculated Model Outputs
             </span>
             <div className="flex flex-wrap items-center gap-1.5">
@@ -664,27 +704,27 @@ export function ScenarioSimulatorView({
               {/* Baseline vs Simulated Category Breakdown Table */}
               <section
                 aria-label="Baseline versus simulated suitability breakdown"
-                className="rounded-xl border border-[#E4E2DA] bg-white p-5 shadow-[0_1px_2px_rgba(18,43,29,0.03)]"
+                className="rounded-2xl border border-[#E7EBE7] bg-white p-5 sm:p-6"
               >
-                <div className="flex flex-col gap-1 border-b border-[#ECEAE3] pb-3 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex flex-col gap-1.5 border-b border-[#E7EBE7] pb-4 sm:flex-row sm:items-center sm:justify-between">
                   <div>
-                    <h2 className="font-display text-base font-bold text-[#14221A]">
+                    <h2 className="font-display text-base font-semibold tracking-[-0.015em] text-[#18231E]">
                       Baseline vs. Simulated Suitability Breakdown — {simEval.crop.name}
                     </h2>
-                    <p className="mt-0.5 text-xs text-[#6B7970]">
+                    <p className="mt-0.5 text-xs text-[#737D76]">
                       Deterministic category-by-category evaluation using Crop Intelligence Engine ({simEval.confidenceLevel} confidence ·{' '}
                       {simEval.dataCompletenessPct}% data completeness).
                     </p>
                   </div>
-                  <span className="shrink-0 whitespace-nowrap font-mono text-xs font-semibold tabular-nums text-[#154734]">
+                  <span className="shrink-0 whitespace-nowrap font-mono text-xs font-semibold tabular-nums text-[#174C3C]">
                     {baseEval.overallScore} → {simEval.overallScore}/100 ({scoreDelta >= 0 ? `+${scoreDelta}` : scoreDelta} pts)
                   </span>
                 </div>
 
-                <div className="mt-3 overflow-x-auto">
+                <div className="mt-4 overflow-x-auto">
                   <table className="w-full border-collapse text-left text-xs">
                     <thead>
-                      <tr className="border-b border-[#ECEAE3] bg-[#FAFAF7] text-[#6B7970]">
+                      <tr className="border-b border-[#E7EBE7] bg-[#F7F8F6] text-[#737D76]">
                         <th className="px-3 py-2.5 font-medium">Factor</th>
                         <th className="px-3 py-2.5 text-right font-medium">Weight</th>
                         <th className="px-3 py-2.5 text-right font-medium">Baseline</th>
@@ -693,7 +733,7 @@ export function ScenarioSimulatorView({
                         <th className="px-3 py-2.5 font-medium">Simulated Diagnostic</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-[#ECEAE3]">
+                    <tbody className="divide-y divide-[#E7EBE7]">
                       {simEval.categories.map((simCat) => {
                         const baseCat = baseEval.categories.find((c) => c.id === simCat.id);
                         const hasBothScores =
@@ -704,31 +744,31 @@ export function ScenarioSimulatorView({
                           ? simCat.score! - baseCat!.score!
                           : 0;
                         return (
-                          <tr key={simCat.id} className="hover:bg-[#FAFAF7]">
-                            <td className="px-3 py-2.5 font-semibold text-[#14221A]">
+                          <tr key={simCat.id} className="hover:bg-[#F7F8F6]/70">
+                            <td className="px-3 py-2.5 font-semibold text-[#18231E]">
                               {simCat.label}
                             </td>
-                            <td className="px-3 py-2.5 text-right font-mono tabular-nums text-[#6B7970]">
+                            <td className="px-3 py-2.5 text-right font-mono tabular-nums text-[#737D76]">
                               {simCat.weight}%
                             </td>
-                            <td className="px-3 py-2.5 text-right font-mono tabular-nums text-[#4B5B51]">
+                            <td className="px-3 py-2.5 text-right font-mono tabular-nums text-[#737D76]">
                               {baseCat && baseCat.score !== null ? `${baseCat.score}/100` : '—'}
                             </td>
-                            <td className="px-3 py-2.5 text-right font-mono font-bold tabular-nums text-[#154734]">
+                            <td className="px-3 py-2.5 text-right font-mono font-bold tabular-nums text-[#174C3C]">
                               {simCat.score !== null ? `${simCat.score}/100` : 'Unavailable'}
                             </td>
                             <td
                               className={`px-3 py-2.5 text-right font-mono font-semibold tabular-nums ${
                                 catDelta > 0
-                                  ? 'text-[#154734]'
+                                  ? 'text-[#174C3C]'
                                   : catDelta < 0
                                     ? 'text-[#B91C1C]'
-                                    : 'text-[#6B7970]'
+                                    : 'text-[#737D76]'
                               }`}
                             >
                               {hasBothScores ? (catDelta > 0 ? `+${catDelta}` : catDelta) : '—'}
                             </td>
-                            <td className="px-3 py-2.5 text-[#4B5B51]">{simCat.detail}</td>
+                            <td className="px-3 py-2.5 text-[#737D76]">{simCat.detail}</td>
                           </tr>
                         );
                       })}
@@ -738,18 +778,18 @@ export function ScenarioSimulatorView({
 
                 {/* Compared Alternative Crops Summary Row */}
                 {config.comparedAlternativeCropIds.length > 0 && (
-                  <div className="mt-4 border-t border-[#ECEAE3] pt-3">
-                    <p className="text-xs font-semibold text-[#14221A]">
-                      Compared Alternative Crops Under This Scenario:
+                  <div className="mt-5 border-t border-[#E7EBE7] pt-4">
+                    <p className="text-xs font-semibold text-[#18231E]">
+                      Compared Alternative Crops Under This Scenario
                     </p>
-                    <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
+                    <div className="mt-2.5 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
                       {config.comparedAlternativeCropIds
                         .map((id) => result.allCropDeltas.find((d) => d.cropId === id))
                         .filter((d): d is NonNullable<typeof d> => Boolean(d))
                         .map((alt) => (
                           <div
                             key={alt.cropId}
-                            className="flex items-center justify-between gap-2 rounded-lg border border-[#E4E2DA] bg-[#FAFAF7] px-3 py-2 text-xs"
+                            className="flex items-center justify-between gap-2 rounded-xl bg-[#F7F8F6] px-3.5 py-2.5 text-xs"
                           >
                             <div>
                               <button
@@ -764,19 +804,19 @@ export function ScenarioSimulatorView({
                                       ),
                                   }))
                                 }
-                                className="font-semibold text-[#14221A] hover:text-[#154734] hover:underline"
+                                className="font-semibold text-[#18231E] hover:text-[#174C3C] hover:underline"
                               >
                                 {alt.cropName}
                               </button>
-                              <span className="block text-[11px] text-[#6B7970]">
+                              <span className="block text-[11px] text-[#737D76]">
                                 {alt.statusTag} · {alt.rotationStatus === 'clean' ? 'Rotation clean' : 'Rotation conflict'}
                               </span>
                             </div>
                             <div className="shrink-0 whitespace-nowrap text-right font-mono tabular-nums">
-                              <span className="font-bold text-[#154734]">
+                              <span className="font-bold text-[#174C3C]">
                                 {alt.simulatedScore}/100
                               </span>
-                              <span className="block text-[11px] text-[#6B7970]">
+                              <span className="block text-[11px] text-[#737D76]">
                                 Base {alt.baselineScore} ({alt.scoreDelta >= 0 ? `+${alt.scoreDelta}` : alt.scoreDelta})
                               </span>
                             </div>
@@ -791,7 +831,7 @@ export function ScenarioSimulatorView({
               <ScenarioComparisonCharts result={result} unitSystem={unitSystem} />
             </>
           ) : (
-            <div className="rounded-xl border border-[#E4E2DA] bg-white p-6 text-center text-sm text-[#4B5B51]">
+            <div className="rounded-2xl border border-[#E7EBE7] bg-white p-6 text-center text-sm text-[#737D76]">
               Waiting for historical NASA POWER baseline observations to render scenario charts and suitability comparisons.
             </div>
           )}
